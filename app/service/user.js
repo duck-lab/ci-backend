@@ -22,13 +22,14 @@ module.exports = app => {
     }
 
     async update (uid, info) {
-      let result = await this.ctx.model.User.findOneAndUpdate({id: uid}, {$set: info})
+      let result = await this.ctx.model.User.findOneAndUpdate({_id: uid},
+        {$set: info}, {new: true})
       return result
     }
 
     async destroy (uids) {
       if (!uids || !uids.length > 0) { return }
-      let result = await this.ctx.model.User.remove({id: {$in: uids}})
+      let result = await this.ctx.model.User.deleteMany({_id: {$in: uids}})
       return result.result
     }
   }
