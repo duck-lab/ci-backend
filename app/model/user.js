@@ -2,12 +2,12 @@
 
 module.exports = ({ mongoose }) => {
   const UsersSchema = new mongoose.Schema({
-    password: { type: String },
-    secretSalt: { type: String },
+    password: { type: String, required: true },
+    secretSalt: { type: String, required: true },
     mobile: { type: String, unique: true, trim: true },
     email: { type: String, unique: true, trim: true },
     nickName: { type: String, unique: true, trim: true },
-    reanName: { type: String, trim: true },
+    realName: { type: String, trim: true },
     country: { type: String },
     province: { type: String },
     city: { type: String },
