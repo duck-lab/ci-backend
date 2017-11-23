@@ -37,7 +37,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git:github.com/duck-lab/ci-backend"
   },
   "author": "duck-lab",
   "license": "MIT"
