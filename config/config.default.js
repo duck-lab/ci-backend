@@ -1,19 +1,19 @@
-'use strict';
+'use strict'
 
-require('dotenv').config(); // Load .env with secret Ids and Keys to process.env
+require('dotenv').config() // Load .env with secret Ids and Keys to process.env
 
 module.exports = appInfo => {
-  const config = exports = {};
+  const config = exports = {}
 
   // use for cookie sign key, should change to your own and keep security
-  config.keys = appInfo.name + '_1511354917609_8659';
+  config.keys = appInfo.name + '_1511354917609_8659'
 
   config.mongoose = {
     url: 'mongodb://127.0.0.1/checkIn_dev',
-    options: {},
-  };
+    options: {}
+  }
   // add your config here
-  config.middleware = [];
+  config.middleware = []
 
-  return config;
-};
+  return config
+}

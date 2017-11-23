@@ -36,6 +36,18 @@
     "ci": "npm run lint && npm run cov",
     "autod": "autod"
   },
+  "standard": {
+    "globals": [
+      "describe",
+      "context",
+      "before",
+      "beforeEach",
+      "after",
+      "afterEach",
+      "it",
+      "expect"
+    ]
+  },
   "ci": {
     "version": "8"
   },
