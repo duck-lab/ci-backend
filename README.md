@@ -1,6 +1,7 @@
 # ci-backend
 
 [![Build Status](https://travis-ci.org/duck-lab/ci-backend.svg?branch=master)](https://travis-ci.org/duck-lab/ci-backend)
+[![codecov](https://codecov.io/gh/duck-lab/ci-backend/branch/master/graph/badge.svg)](https://codecov.io/gh/duck-lab/ci-backend)
 
 The backend api of check in app
 
