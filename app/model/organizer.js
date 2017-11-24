@@ -2,9 +2,12 @@
 
 module.exports = ({ mongoose }) => {
   const OrganizerSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
-    event: { type: mongoose.Schema.Types.ObjectId, ref: 'Event', required: true, index: true },
-    role: { type: String, required: true }
+    name: { type: String, required: true, trim: true },
+    logo: { type: String },
+    contact: { type: String },
+    email: { type: String },
+    address: { type: String },
+    site: { type: String }
   })
 
   return mongoose.model('Organizer', OrganizerSchema)

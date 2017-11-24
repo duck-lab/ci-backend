@@ -1,15 +1,6 @@
 'use strict'
 
 module.exports = ({ mongoose }) => {
-  const OrganizerSchema = new mongoose.Schema({
-    name: { type: String, required: true, trim: true },
-    logo: { type: String },
-    contact: { type: String },
-    email: { type: String },
-    address: { type: String },
-    site: { type: String }
-  })
-
   const EventSchema = new mongoose.Schema({
     title: { type: String, required: true, trim: true, index: true },
     postImage: { type: String },
@@ -21,7 +12,7 @@ module.exports = ({ mongoose }) => {
     province: { type: String },
     city: { type: String },
     address: { type: String, trim: true },
-    organizers: [OrganizerSchema],
+    organizers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Organizer' }],
     limitCheckInAmount: { type: Number },
     isRegisteredOnly: { type: Boolean, default: false },
     checkInType: { type: String, required: true },

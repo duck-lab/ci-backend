@@ -9,5 +9,7 @@ module.exports = ({ mongoose }) => {
     isRegisted: { type: Boolean, default: false }
   })
 
+  RegisterSchema.index({user: 1, event: 1}, { unique: true }) // build multi key index.
+
   return mongoose.model('Register', RegisterSchema)
 }
