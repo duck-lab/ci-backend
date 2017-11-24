@@ -24,21 +24,6 @@ describe('Event Service', () => {
       province: '上海',
       city: '上海',
       address: '静安区',
-      organizers: [{
-        name: 'DuckLab',
-        logo: 'duckLogo',
-        contact: 'tectContact',
-        email: 'tectEmail',
-        address: 'testAddress',
-        site: 'github.com/duck-lab'
-      }, {
-        name: 'AnotherLab',
-        logo: 'AnotherLogo',
-        contact: 'AnotherContact',
-        email: 'AnotherEmail',
-        address: 'AnotherAddress',
-        site: 'github.com/another-lab'
-      }],
       checkInType: 'QR_CODE_GENERAL'
     }
     it('should create event', async () => {
