@@ -3,33 +3,33 @@
 module.exports = app => {
   class UsersService extends app.Service {
     async find (filter) {
-      let data = await this.ctx.model.Event.find({filter})
+      let data = await this.ctx.model.Event.find(filter)
       let result = {}
       result.meta = {total: data.length}
       result.data = data
       return result
     }
 
-    async findById (eid) {
-      let data = await this.ctx.model.Event.findById(eid)
+    async findById (id) {
+      let data = await this.ctx.model.Event.findById(id)
       return data
     }
 
-    async create (event) {
-      if (!event) { return }
-      let data = await this.ctx.model.Event.create(event)
+    async create (info) {
+      if (!info) { return }
+      let data = await this.ctx.model.Event.create(info)
       return data
     }
 
-    async update (eid, info) {
-      let data = await this.ctx.model.Event.findOneAndUpdate({_id: eid},
+    async update (id, info) {
+      let data = await this.ctx.model.Event.findOneAndUpdate({_id: id},
         {$set: info}, {new: true})
       return data
     }
 
-    async destroy (eids) {
-      if (!eids || !eids.length > 0) { return }
-      let data = await this.ctx.model.Event.deleteMany({_id: {$in: eids}})
+    async destroy (ids) {
+      if (!ids || !ids.length > 0) { return }
+      let data = await this.ctx.model.Event.deleteMany({_id: {$in: ids}})
       return data.result
     }
   }
