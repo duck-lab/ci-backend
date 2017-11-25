@@ -3,7 +3,7 @@
 module.exports = app => {
   class UsersService extends app.Service {
     async find (filter) {
-      let data = await this.ctx.model.Event.find({filter})
+      let data = await this.ctx.model.Event.find(filter)
       let result = {}
       result.meta = {total: data.length}
       result.data = data

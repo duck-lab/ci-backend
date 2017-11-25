@@ -69,6 +69,21 @@ describe('Register Service', () => {
   })
 
   describe('Find', () => {
+    it('should get resgister by registCode', async () => {
+      const ctx = app.mockContext()
+
+      const result = await ctx.service.register.find({registCode: 'testRegCode1'})
+      const registerInfo = result.data[0]
+
+      assert(result)
+      assert(registerInfo)
+      assert.equal(result.meta.total, 1)
+
+      assert.equal(registerInfo.user, rUser.id)
+      assert.equal(registerInfo.event, rEvent.id)
+      assert.equal(registerInfo.registCode, 'testRegCode1')
+    })
+
     it('should get resgister with userId', async () => {
       const ctx = app.mockContext()
 

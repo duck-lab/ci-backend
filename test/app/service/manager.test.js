@@ -69,6 +69,21 @@ describe('Manager Service', () => {
   })
 
   describe('Find', () => {
+    it('should get manager by user and event', async () => {
+      const ctx = app.mockContext()
+
+      const result = await ctx.service.manager.find({user: rUser.id, event: rEvent.id})
+      const managerInfo = result.data[0]
+
+      assert(result)
+      assert(managerInfo)
+      assert.equal(result.meta.total, 1)
+
+      assert.equal(managerInfo.user, rUser.id)
+      assert.equal(managerInfo.event, rEvent.id)
+      assert.equal(managerInfo.role, 'ADMIN')
+    })
+
     it('should get manager with userId', async () => {
       const ctx = app.mockContext()
 

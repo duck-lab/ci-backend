@@ -37,6 +37,24 @@ describe('Organizer Service', () => {
   })
 
   describe('Find', () => {
+    it('should get organizer by name', async () => {
+      const ctx = app.mockContext()
+
+      const result = await ctx.service.organizer.find({name: 'organizerName'})
+      const organizerInfo = result.data[0]
+
+      assert(result)
+      assert(organizerInfo)
+      assert.equal(result.meta.total, 1)
+
+      assert.equal(organizerInfo.name, 'organizerName')
+      assert.equal(organizerInfo.logo, 'http://logo.com/logo')
+      assert.equal(organizerInfo.contact, '+86 201 1234567')
+      assert.equal(organizerInfo.email, 'ole3021@gmail.com')
+      assert.equal(organizerInfo.address, '上海市静安区')
+      assert.equal(organizerInfo.site, 'http://ole3021.me')
+    })
+
     it('should get user with userId', async () => {
       const ctx = app.mockContext()
 
