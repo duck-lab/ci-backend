@@ -6,7 +6,7 @@ module.exports = ({ mongoose }) => {
     secretSalt: { type: String, required: true },
     mobile: { type: String, unique: true, trim: true, index: true },
     email: { type: String, unique: true, trim: true, index: true },
-    nickName: { type: String, unique: true, trim: true },
+    username: { type: String, unique: true, trim: true },
     realName: { type: String, trim: true },
     country: { type: String },
     province: { type: String },

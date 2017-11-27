@@ -18,7 +18,7 @@ describe('User Service', () => {
       secretSalt: 'testSecretSalt',
       mobile: '+86 18303033030',
       email: 'ole3021@gmail.com',
-      nickName: 'ole3021',
+      username: 'ole3021',
       realName: 'Oliver.W',
       country: 'China',
       province: '上海',
@@ -35,7 +35,7 @@ describe('User Service', () => {
       assert.equal(user.secretSalt, 'testSecretSalt')
       assert.equal(user.mobile, '+86 18303033030')
       assert.equal(user.email, 'ole3021@gmail.com')
-      assert.equal(user.nickName, 'ole3021')
+      assert.equal(user.username, 'ole3021')
       assert.equal(user.realName, 'Oliver.W')
       assert.equal(user.country, 'China')
       assert.equal(user.province, '上海')
@@ -45,10 +45,10 @@ describe('User Service', () => {
   })
 
   describe('Find', () => {
-    it('should get user by nickname', async () => {
+    it('should get user by username', async () => {
       const ctx = app.mockContext()
 
-      const result = await ctx.service.user.find({nickName: 'ole3021'})
+      const result = await ctx.service.user.find({username: 'ole3021'})
       const userInfo = result.data[0]
 
       assert(result)
@@ -59,7 +59,7 @@ describe('User Service', () => {
       assert.equal(userInfo.secretSalt, 'testSecretSalt')
       assert.equal(userInfo.mobile, '+86 18303033030')
       assert.equal(userInfo.email, 'ole3021@gmail.com')
-      assert.equal(userInfo.nickName, 'ole3021')
+      assert.equal(userInfo.username, 'ole3021')
       assert.equal(userInfo.realName, 'Oliver.W')
       assert.equal(userInfo.country, 'China')
       assert.equal(userInfo.province, '上海')
@@ -76,7 +76,7 @@ describe('User Service', () => {
       assert.equal(user.secretSalt, 'testSecretSalt')
       assert.equal(user.mobile, '+86 18303033030')
       assert.equal(user.email, 'ole3021@gmail.com')
-      assert.equal(user.nickName, 'ole3021')
+      assert.equal(user.username, 'ole3021')
       assert.equal(user.realName, 'Oliver.W')
       assert.equal(user.country, 'China')
       assert.equal(user.province, '上海')
@@ -99,7 +99,7 @@ describe('User Service', () => {
       assert.equal(user.secretSalt, 'testSecretSalt')
       assert.equal(user.mobile, 'updateMobile')
       assert.equal(user.email, 'ole3021@gmail.com')
-      assert.equal(user.nickName, 'ole3021')
+      assert.equal(user.username, 'ole3021')
       assert.equal(user.realName, 'updatedName')
       assert.equal(user.country, 'China')
       assert.equal(user.province, '上海')

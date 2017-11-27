@@ -21,7 +21,7 @@ describe('Register Service', () => {
       secretSalt: 'regTestSalt',
       mobile: '+86 18303033333',
       email: 'ole3023@gmail.com',
-      nickName: 'ole3033',
+      username: 'ole3033',
       realName: 'Oliver.W',
       country: 'China',
       province: '上海',
