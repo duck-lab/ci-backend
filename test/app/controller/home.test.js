@@ -12,6 +12,6 @@ describe('api.js', () => {
     return app.httpRequest()
       .get('/')
       .expect(200)
-      .expect.equal('good')
+      .expect('good')
   })
 })
