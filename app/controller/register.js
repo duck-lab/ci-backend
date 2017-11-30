@@ -4,21 +4,21 @@ const Controller = require('egg').Controller
 
 class RegisterController extends Controller {
   async getEventRegisters (ctx) {
-    ctx.body = await ctx.service.Register.find({
+    ctx.body = await ctx.service.register.find({
       event: ctx.params.event
     })
   }
 
   async createRegisterByMobile (ctx) {
     // TODO: verify mobile
-    ctx.body = await ctx.service.Register.create({
+    ctx.body = await ctx.service.register.create({
       event: ctx.params.event,
       mobile: ctx.query.mobile
     })
   }
 
   async checkInRegisterByMobile (ctx) {
-    const register = await ctx.service.Register.find({
+    const register = await ctx.service.register.find({
       event: ctx.params.event,
       mobile: ctx.query.mobile
     }).data[0]
@@ -27,7 +27,7 @@ class RegisterController extends Controller {
 
   async createRegister (ctx) {
     // TODO: verify user
-    ctx.body = await ctx.service.Register.create({
+    ctx.body = await ctx.service.register.create({
       event: ctx.params.event,
       user: ctx.params.user
     })
@@ -35,7 +35,7 @@ class RegisterController extends Controller {
 
   async checkInRegister (ctx) {
     // TODO: check user
-    const register = await ctx.service.Register.find({
+    const register = await ctx.service.register.find({
       event: ctx.params.event,
       user: ctx.params.user
     }).data[0]
@@ -43,7 +43,7 @@ class RegisterController extends Controller {
   }
 
   async removeRegister (ctx) {
-    const register = await ctx.service.Register.find({
+    const register = await ctx.service.register.find({
       event: ctx.params.event,
       user: ctx.params.user
     }).data[0]

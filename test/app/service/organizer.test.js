@@ -5,7 +5,6 @@ const { app, assert } = require('egg-mock/bootstrap')
 describe('Organizer Service', () => {
   let createdOrganizer = null
 
-  before(() => app.ready())
   after(() => {
     const ctx = app.mockContext()
 

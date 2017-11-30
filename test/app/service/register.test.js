@@ -8,7 +8,6 @@ describe('Register Service', () => {
   let rEvent = null
   let testRegister1 = null
 
-  before(() => app.ready())
   after(() => {
     const ctx = app.mockContext()
 

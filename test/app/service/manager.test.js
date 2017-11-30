@@ -8,7 +8,6 @@ describe('Manager Service', () => {
   let rEvent = null
   let testManager1 = null
 
-  before(() => app.ready())
   after(() => {
     const ctx = app.mockContext()
 
