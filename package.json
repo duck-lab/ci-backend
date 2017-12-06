@@ -33,7 +33,7 @@
     "cov": "egg-bin cov",
     "lint": "standard",
     "fix": "standard --fix",
-    "ci": "npm run lint && npm run cov",
+    "ci": "NODE_ENV=test npm run lint && npm run cov",
     "autod": "autod"
   },
   "standard": {

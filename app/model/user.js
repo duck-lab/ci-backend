@@ -15,7 +15,8 @@ module.exports = ({ mongoose }) => {
     wechatOpenId: { type: String, index: true },
     wechatUnionId: { type: String, index: true },
     isMobileVerified: { type: Boolean, default: false },
-    isEmailVerified: { type: Boolean, default: false }
+    isEmailVerified: { type: Boolean, default: false },
+    __v: { type: Number, select: false }
   })
 
   return mongoose.model('User', UserSchema)

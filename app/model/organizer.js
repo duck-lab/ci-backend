@@ -7,7 +7,8 @@ module.exports = ({ mongoose }) => {
     contact: { type: String },
     email: { type: String },
     address: { type: String },
-    site: { type: String }
+    site: { type: String },
+    __v: { type: Number, select: false }
   })
 
   return mongoose.model('Organizer', OrganizerSchema)

@@ -28,8 +28,8 @@ class EventController extends Controller {
     ctx.body = await ctx.service.event.find({title: ctx.params.event})
   }
 
-  async patchEvent (ctx) {
-    await ctx.service.event.update(ctx.params.event, ctx.request.body)
+  async updateAnEvent (ctx) {
+    ctx.body = await ctx.service.event.update(ctx.params.event, ctx.request.body)
   }
 }
 
