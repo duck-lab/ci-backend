@@ -21,8 +21,8 @@ module.exports = appInfo => {
   }
 
   config.oAuth2Server = {
-    debug: config.env = 'development',
-    grants: ['password', 'client_credentials']
+    debug: true,
+    grants: ['password']
   }
 
   config.security = {

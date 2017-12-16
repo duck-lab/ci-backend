@@ -1,10 +1,10 @@
 'use strict'
 
 const bcrypt = require('bcrypt')
-const Joi = require('joi')
+// const Joi = require('joi')
 
 module.exports = app => {
-  class UsersService extends app.Service {
+  class UserService extends app.Service {
     async find (filter) {
       let data = await this.ctx.model.User.find(filter)
       let result = {}
@@ -19,8 +19,11 @@ module.exports = app => {
     }
 
     async verifyUser (username, password) {
-      const data = await this.ctx.model.User.find({username})
-      const user = data[0]
+      // TODO: fix with the ctx missing of the module.
+      const user = await this.ctx.model.User.findOne({ $or: [
+        { email: username },
+        { username: username }
+      ]})
       if (!user) return null
       const isVerified = await bcrypt.compare(password, user.hashedPassword)
       return isVerified ? user : null
@@ -47,5 +50,5 @@ module.exports = app => {
     }
   }
 
-  return UsersService
+  return UserService
 }

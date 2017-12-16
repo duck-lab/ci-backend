@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = app => {
-  class UsersService extends app.Service {
+  class EventService extends app.Service {
     async find (filter) {
       let data = await this.ctx.model.Event.find(filter)
       let result = {}
@@ -34,5 +34,5 @@ module.exports = app => {
     }
   }
 
-  return UsersService
+  return EventService
 }

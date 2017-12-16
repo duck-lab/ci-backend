@@ -9,7 +9,9 @@ module.exports = app => {
 
   // Auth route
   router.post('/login', app.oAuth2Server.token())
-  router.app('/logout', controller.auth.logout)
+  // router.get('/user/authorize', app.oAuth2Server.authorize(), 'user.code')
+  // router.get('/user/authenticate', app.oAuth2Server.authenticate(), 'user.authenticate')
+  // router.app('/logout', controller.auth.logout)
 
   // User route
   router.get('/users', app.oAuth2Server.authorize(), controller.user.getAllUsers)

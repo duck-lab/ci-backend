@@ -14,7 +14,6 @@ describe('User Service', () => {
   describe('Create', () => {
     const testUser1 = {
       password: 'testPassword',
-      secretSalt: 'testSecretSalt',
       mobile: '+86 18303033030',
       email: 'ole3021@gmail.com',
       username: 'ole3021',
@@ -30,8 +29,7 @@ describe('User Service', () => {
       const user = await ctx.service.user.create(testUser1)
       createdUser = user
       assert(user)
-      assert.equal(user.password, 'testPassword')
-      assert.equal(user.secretSalt, 'testSecretSalt')
+      assert(user.hashedPassword)
       assert.equal(user.mobile, '+86 18303033030')
       assert.equal(user.email, 'ole3021@gmail.com')
       assert.equal(user.username, 'ole3021')
@@ -54,8 +52,6 @@ describe('User Service', () => {
       assert(userInfo)
       assert.equal(result.meta.total, 1)
 
-      assert.equal(userInfo.password, 'testPassword')
-      assert.equal(userInfo.secretSalt, 'testSecretSalt')
       assert.equal(userInfo.mobile, '+86 18303033030')
       assert.equal(userInfo.email, 'ole3021@gmail.com')
       assert.equal(userInfo.username, 'ole3021')
@@ -71,8 +67,6 @@ describe('User Service', () => {
 
       const user = await ctx.service.user.findById(createdUser.id)
       assert(user)
-      assert.equal(user.password, 'testPassword')
-      assert.equal(user.secretSalt, 'testSecretSalt')
       assert.equal(user.mobile, '+86 18303033030')
       assert.equal(user.email, 'ole3021@gmail.com')
       assert.equal(user.username, 'ole3021')
@@ -94,8 +88,6 @@ describe('User Service', () => {
       })
 
       assert(user)
-      assert.equal(user.password, 'testPassword')
-      assert.equal(user.secretSalt, 'testSecretSalt')
       assert.equal(user.mobile, 'updateMobile')
       assert.equal(user.email, 'ole3021@gmail.com')
       assert.equal(user.username, 'ole3021')
