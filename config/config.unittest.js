@@ -8,5 +8,11 @@ module.exports = appInfo => {
     options: {}
   }
 
+  config.security = {
+    csrf: {
+      enable: false // Disable CSRF for test
+    }
+  }
+
   return config
 }

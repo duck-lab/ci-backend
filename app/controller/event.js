@@ -4,11 +4,11 @@ const Controller = require('egg').Controller
 
 class EventController extends Controller {
   async getAllEvents (ctx) {
-    ctx.body = await ctx.service.Event.find(ctx.query)
+    ctx.body = await ctx.service.event.find(ctx.query)
   }
 
   async createEvent (ctx) {
-    ctx.body = await ctx.service.Event.create(ctx.request.body)
+    ctx.body = await ctx.service.event.create(ctx.request.body)
   }
 
   async getAuthUserEvents (ctx) {
@@ -25,11 +25,11 @@ class EventController extends Controller {
   }
 
   async getEvent (ctx) {
-    ctx.body = await ctx.service.Event.find({title: ctx.params.event})
+    ctx.body = await ctx.service.event.find({title: ctx.params.event})
   }
 
-  async patchEvent (ctx) {
-    await ctx.service.Event.update(ctx.params.event, ctx.request.body)
+  async updateAnEvent (ctx) {
+    ctx.body = await ctx.service.event.update(ctx.params.event, ctx.request.body)
   }
 }
 

@@ -12,6 +12,7 @@ module.exports = appInfo => {
     url: 'mongodb://127.0.0.1/checkIn_dev',
     options: {}
   }
+
   // add your config here
   config.middleware = []
 

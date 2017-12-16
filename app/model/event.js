@@ -18,7 +18,8 @@ module.exports = ({ mongoose }) => {
     checkInType: { type: String, required: true },
     redirect: { type: String },
     subEvents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }],
-    isAutoCheckIn: { type: Boolean, default: false }
+    isAutoCheckIn: { type: Boolean, default: false },
+    __v: { type: Number, select: false }
   })
 
   return mongoose.model('Event', EventSchema)
