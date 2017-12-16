@@ -79,7 +79,7 @@ describe('Register Service', () => {
       assert.equal(result.meta.total, 1)
 
       assert.equal(registerInfo.user, rUser.id)
-      assert.equal(registerInfo.event, rEvent.id)
+      assert.equal(registerInfo.event.id, rEvent.id)
       assert.equal(registerInfo.registCode, 'testRegCode1')
     })
 

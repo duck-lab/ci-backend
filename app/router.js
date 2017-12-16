@@ -46,7 +46,8 @@ module.exports = app => {
 
   // Manager route
   router.get('/events/:event/managers', controller.manager.getEventManagers)
-  router.post('/events/:event/managers/:user', controller.register.createEventManager)
-  router.put('/events/:event/managers/:user', controller.register.udpateEventManager)
+  // TODO: Error: controller not exists
+  // router.post('/events/:event/managers/:user', controller.register.createEventManager)
+  // router.put('/events/:event/managers/:user', controller.register.udpateEventManager)
   router.delete('/events/:event/managers/:user', controller.register.removeRegister)
 }
