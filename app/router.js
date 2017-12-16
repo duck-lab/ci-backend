@@ -7,8 +7,12 @@ module.exports = app => {
   const { router, controller } = app
   router.get('/', controller.api.status)
 
+  // Auth route
+  router.post('/login', app.oAuth2Server.token())
+  router.app('/logout', controller.auth.logout)
+
   // User route
-  router.get('/users', controller.user.getAllUsers)
+  router.get('/users', app.oAuth2Server.authorize(), controller.user.getAllUsers)
   router.post('/users', controller.user.createUser)
   router.get('/user', controller.user.getAuthUser)
   router.patch('/user', controller.user.updateAuthUser)

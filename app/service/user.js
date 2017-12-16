@@ -1,5 +1,8 @@
 'use strict'
 
+const bcrypt = require('bcrypt')
+const Joi = require('joi')
+
 module.exports = app => {
   class UsersService extends app.Service {
     async find (filter) {
@@ -15,9 +18,19 @@ module.exports = app => {
       return data
     }
 
+    async verifyUser (username, password) {
+      const data = await this.ctx.model.User.find({username})
+      const user = data[0]
+      if (!user) return null
+      const isVerified = await bcrypt.compare(password, user.hashedPassword)
+      return isVerified ? user : null
+    }
+
     async create (info) {
       if (!info) { return }
-      let data = await this.ctx.model.User.create(info)
+      // Encrypt password
+      const hashedPassword = await bcrypt.hash(info.password, app.config.auth.saltRounds)
+      let data = await this.ctx.model.User.create(Object.assign(info, {hashedPassword}))
       return data
     }
 

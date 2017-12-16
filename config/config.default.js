@@ -15,5 +15,20 @@ module.exports = appInfo => {
   // add your config here
   config.middleware = []
 
+  config.auth = {
+    saltRounds: 10
+  }
+
+  config.oAuth2Server = {
+    debug: config.env = 'development',
+    grants: ['password', 'client_credentials']
+  }
+
+  config.security = {
+    csrf: {
+      enable: false
+    }
+  }
+
   return config
 }
