@@ -8,7 +8,7 @@ describe('Manager Service', () => {
   let rEvent = null
   let testManager1 = null
 
-  after(() => {
+  before(() => {
     const ctx = app.mockContext()
 
     ctx.model.Manager.collection.drop()

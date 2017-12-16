@@ -8,7 +8,7 @@ describe('Register Service', () => {
   let rEvent = null
   let testRegister1 = null
 
-  after(() => {
+  before(() => {
     const ctx = app.mockContext()
 
     ctx.model.Register.collection.drop()

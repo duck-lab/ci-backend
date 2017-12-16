@@ -1,5 +1,7 @@
 'use strict'
 
+const timestamps = require('mongoose-timestamp')
+
 module.exports = ({ mongoose }) => {
   const EventSchema = new mongoose.Schema({
     title: { type: String, required: true, trim: true, index: true },
@@ -21,6 +23,8 @@ module.exports = ({ mongoose }) => {
     isAutoCheckIn: { type: Boolean, default: false },
     __v: { type: Number, select: false }
   })
+
+  EventSchema.plugin(timestamps)
 
   return mongoose.model('Event', EventSchema)
 }

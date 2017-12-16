@@ -5,7 +5,7 @@ const { app, assert } = require('egg-mock/bootstrap')
 describe('User Service', () => {
   let createdUser = null
 
-  after(() => {
+  before(() => {
     const ctx = app.mockContext()
 
     ctx.model.User.collection.drop()

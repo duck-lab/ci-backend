@@ -3,7 +3,7 @@
 module.exports = app => {
   class EventService extends app.Service {
     async find (filter) {
-      let data = await this.ctx.model.Event.find(filter)
+      let data = await this.ctx.model.Event.find(filter).sort('field -eventStartAt')
       let result = {}
       result.meta = {total: data.length}
       result.data = data

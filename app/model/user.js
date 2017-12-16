@@ -1,5 +1,7 @@
 'use strict'
 
+const timestamps = require('mongoose-timestamp')
+
 module.exports = ({ mongoose }) => {
   const UserSchema = new mongoose.Schema({
     hashedPassword: { type: String, required: true },
@@ -17,6 +19,8 @@ module.exports = ({ mongoose }) => {
     isEmailVerified: { type: Boolean, default: false },
     __v: { type: Number, select: false }
   })
+
+  UserSchema.plugin(timestamps)
 
   return mongoose.model('User', UserSchema)
 }

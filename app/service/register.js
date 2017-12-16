@@ -3,7 +3,7 @@
 module.exports = app => {
   class RegisterService extends app.Service {
     async find (filter) {
-      let data = await this.ctx.model.Register.find(filter)
+      let data = await this.ctx.model.Register.find(filter).sort('field -createdAt').populate('event')
       let result = {}
       result.meta = {total: data.length}
       result.data = data

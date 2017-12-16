@@ -19,8 +19,12 @@ class EventController extends Controller {
   }
 
   async getUserEvents (ctx) {
-    ctx.body = await ctx.service.Register.find({
-      user: ctx.params.username
+    const result = await ctx.service.user.find({
+      username: ctx.params.username
+    })
+    const user = result.data[0]
+    ctx.body = await ctx.service.register.find({
+      user: user.id
     })
   }
 
@@ -29,6 +33,7 @@ class EventController extends Controller {
   }
 
   async updateAnEvent (ctx) {
+    // TODO: check adminiation
     ctx.body = await ctx.service.event.update(ctx.params.event, ctx.request.body)
   }
 }

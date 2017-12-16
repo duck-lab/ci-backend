@@ -5,7 +5,7 @@ const { app, assert } = require('egg-mock/bootstrap')
 describe('Organizer Service', () => {
   let createdOrganizer = null
 
-  after(() => {
+  before(() => {
     const ctx = app.mockContext()
 
     ctx.model.Organizer.collection.drop()

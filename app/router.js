@@ -24,7 +24,7 @@ module.exports = app => {
   router.get('/events', controller.event.getAllEvents)
   router.post('/events', controller.event.createEvent)
   router.get('/user/events', controller.event.getAuthUserEvents)
-  router.get('/users/:username/events', controller.getUserEvents)
+  router.get('/users/:username/events', controller.event.getUserEvents)
   router.get('/events/:event', controller.event.getEvent)
   router.patch('/events/:event', controller.event.updateAnEvent)
 

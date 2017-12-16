@@ -1,5 +1,7 @@
 'use strict'
 
+const timestamps = require('mongoose-timestamp')
+
 module.exports = ({ mongoose }) => {
   const RegisterSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', index: true },
@@ -9,6 +11,8 @@ module.exports = ({ mongoose }) => {
     isRegisted: { type: Boolean, default: false },
     __v: { type: Number, select: false }
   })
+
+  RegisterSchema.plugin(timestamps)
 
   RegisterSchema.index({user: 1, event: 1}, { unique: true }) // build multi key index.
 

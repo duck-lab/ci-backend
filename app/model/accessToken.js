@@ -1,5 +1,7 @@
 'use strict'
 
+const timestamps = require('mongoose-timestamp')
+
 module.exports = ({ mongoose }) => {
   const AccessTokenSchema = new mongoose.Schema({
     accessToken: { type: String, required: true },
@@ -10,6 +12,8 @@ module.exports = ({ mongoose }) => {
     client: { type: Object, required: true },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
   })
+
+  AccessTokenSchema.plugin(timestamps)
 
   return mongoose.model('AccessToken', AccessTokenSchema)
 }

@@ -5,7 +5,7 @@ const { app, assert } = require('egg-mock/bootstrap')
 describe('Event Service', () => {
   let createdEvent = null
 
-  after(() => {
+  before(() => {
     const ctx = app.mockContext()
 
     ctx.model.Event.collection.drop()
