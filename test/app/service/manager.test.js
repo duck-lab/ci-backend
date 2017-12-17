@@ -1,6 +1,7 @@
 'use strict'
 
 const { app, assert } = require('egg-mock/bootstrap')
+const { flashDB } = require('../../fixtures/db')
 
 describe('Manager Service', () => {
   let createdManager = null
@@ -8,11 +9,7 @@ describe('Manager Service', () => {
   let rEvent = null
   let testManager1 = null
 
-  before(() => {
-    const ctx = app.mockContext()
-
-    ctx.model.Manager.collection.drop()
-  })
+  before(() => flashDB(app.mongoose, 'checkIn_test'))
 
   describe('Create', () => {
     const testUser1 = {
@@ -71,7 +68,7 @@ describe('Manager Service', () => {
     it('should get manager by user and event', async () => {
       const ctx = app.mockContext()
 
-      const result = await ctx.service.manager.find({user: rUser.id, event: rEvent.id})
+      const result = await ctx.service.manager.findByFilter({user: rUser.id, event: rEvent.id})
       const managerInfo = result.data[0]
 
       assert(result)
@@ -98,7 +95,7 @@ describe('Manager Service', () => {
     it('should update manager several fileds with id', async () => {
       const ctx = app.mockContext()
 
-      const manager = await ctx.service.manager.update(createdManager.id, {
+      const manager = await ctx.service.manager.updateById(createdManager.id, {
         role: 'VIEWER'
       })
 
@@ -113,7 +110,7 @@ describe('Manager Service', () => {
     it('should delete manager in the list of uids', async () => {
       const ctx = app.mockContext()
 
-      const result = await ctx.service.manager.destroy([createdManager.id])
+      const result = await ctx.service.manager.destroyByFilter({_id: createdManager.id})
 
       assert(result)
       assert.equal(result.n, result.ok)

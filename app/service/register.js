@@ -2,7 +2,7 @@
 
 module.exports = app => {
   class RegisterService extends app.Service {
-    async find (filter) {
+    async findRegistedEventsByFilter (filter) {
       let data = await this.ctx.model.Register.find(filter).sort('field -createdAt').populate('event')
       let result = {}
       result.meta = {total: data.length}
@@ -10,9 +10,12 @@ module.exports = app => {
       return result
     }
 
-    async findById (id) {
-      let data = await this.ctx.model.Register.findById(id)
-      return data
+    async findRegistedUsersByFilter (filter) {
+      let data = await this.ctx.model.Register.find(filter).sort('field -createdAt').populate('user')
+      let result = {}
+      result.meta = {total: data.length}
+      result.data = data
+      return result
     }
 
     async create (register) {
@@ -21,16 +24,15 @@ module.exports = app => {
       return data
     }
 
-    async update (id, info) {
-      let data = await this.ctx.model.Register.findOneAndUpdate({_id: id},
+    async updateByFilter (filter, info) {
+      let data = await this.ctx.model.Register.findOneAndUpdate(filter,
         {$set: info}, {new: true})
       return data
     }
 
-    async destroy (ids) {
-      if (!ids || !ids.length > 0) { return }
-      let data = await this.ctx.model.Register.deleteMany({_id: {$in: ids}})
-      return data.result
+    async destroyByFilter (filter) {
+      let data = await this.ctx.model.Register.deleteOne(filter)
+      return data
     }
   }
   return RegisterService

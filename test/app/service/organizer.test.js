@@ -1,18 +1,15 @@
 'use strict'
 
 const { app, assert } = require('egg-mock/bootstrap')
+const { flashDB } = require('../../fixtures/db')
 
 describe('Organizer Service', () => {
   let createdOrganizer = null
 
-  before(() => {
-    const ctx = app.mockContext()
-
-    ctx.model.Organizer.collection.drop()
-  })
+  before(() => flashDB(app.mongoose, 'checkIn_test'))
 
   describe('Create', () => {
-    const testUser1 = {
+    const testUser = {
       name: 'organizerName',
       logo: 'http://logo.com/logo',
       contact: '+86 201 1234567',
@@ -23,7 +20,7 @@ describe('Organizer Service', () => {
     it('should create organizer', async () => {
       const ctx = app.mockContext()
 
-      const organizer = await ctx.service.organizer.create(testUser1)
+      const organizer = await ctx.service.organizer.create(testUser)
       createdOrganizer = organizer
       assert(organizer)
       assert.equal(organizer.name, 'organizerName')
@@ -39,7 +36,7 @@ describe('Organizer Service', () => {
     it('should get organizer by name', async () => {
       const ctx = app.mockContext()
 
-      const result = await ctx.service.organizer.find({name: 'organizerName'})
+      const result = await ctx.service.organizer.findByFilter({name: 'organizerName'})
       const organizerInfo = result.data[0]
 
       assert(result)
@@ -72,7 +69,7 @@ describe('Organizer Service', () => {
     it('should update user several fileds with id', async () => {
       const ctx = app.mockContext()
 
-      const organizer = await ctx.service.organizer.update(createdOrganizer.id, {
+      const organizer = await ctx.service.organizer.updateById(createdOrganizer.id, {
         name: 'updatedName',
         contact: 'updateMobile'
       })
@@ -88,10 +85,10 @@ describe('Organizer Service', () => {
   })
 
   describe('Delete', () => {
-    it('should delete users in the list of uids', async () => {
+    it('should delete org by filter', async () => {
       const ctx = app.mockContext()
 
-      const result = await ctx.service.organizer.destroy([createdOrganizer.id])
+      const result = await ctx.service.organizer.destroyByFilter({_id: createdOrganizer.id})
 
       assert(result)
       assert(result.n === result.ok)

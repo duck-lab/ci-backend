@@ -10,7 +10,7 @@ module.exports = ({ mongoose }) => {
     refreshTokenExpiresAt: { type: Date, required: true },
     scope: { type: Object },
     client: { type: Object, required: true },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+    user: { type: Object, required: true }
   })
 
   AccessTokenSchema.plugin(timestamps)

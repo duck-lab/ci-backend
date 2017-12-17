@@ -4,14 +4,14 @@ const Controller = require('egg').Controller
 
 class ManagerController extends Controller {
   async getEventManagers (ctx) {
-    ctx.body = await ctx.service.manager.find({
+    ctx.body = await ctx.service.manager.findByFilter({
       event: ctx.params.event
     })
   }
 
   async createEventManager (ctx) {
-    const event = await ctx.service.event.find({title: ctx.params.event})
-    const user = await ctx.service.user.find({username: ctx.params.user})
+    const event = await ctx.service.event.findByFilter({title: ctx.params.event})
+    const user = await ctx.service.user.findByFilter({username: ctx.params.user})
     ctx.body = await ctx.service.manager.create({
       event: event.id,
       user: user.id,
@@ -21,19 +21,31 @@ class ManagerController extends Controller {
 
   async udpateEventManager (ctx) {
     // TODO: verify user
-    const orgnaizer = await ctx.service.manager.find({
+    const orgnaizer = await ctx.service.manager.findByFilter({
       event: ctx.params.event,
       user: ctx.params.user
     })
-    ctx.body = await ctx.service.manager.update(orgnaizer.id, ctx.request.body)
+    ctx.body = await ctx.service.manager.updateById(orgnaizer.id, ctx.request.body)
   }
 
-  async removeRegister (ctx) {
-    const orgnaizer = await ctx.service.manager.find({
+  async removeEventManager (ctx) {
+    const orgnaizer = await ctx.service.manager.findByFilter({
       event: ctx.params.event,
       user: ctx.params.user
     })
-    ctx.body = await ctx.service.manager.destroy(orgnaizer.id)
+    ctx.body = await ctx.service.manager.destroyByFilter({_id: orgnaizer.id})
+  }
+
+  async createOrgManager (ctx) {
+    // TODO
+  }
+
+  async udpateOrgManager (ctx) {
+    // TODO
+  }
+
+  async removeOrgManager (ctx) {
+    // TODO
   }
 }
 

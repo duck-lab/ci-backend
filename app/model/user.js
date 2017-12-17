@@ -17,6 +17,7 @@ module.exports = ({ mongoose }) => {
     wechatUnionId: { type: String, index: true },
     isMobileVerified: { type: Boolean, default: false },
     isEmailVerified: { type: Boolean, default: false },
+    isBanned: { type: Boolean, default: false },
     __v: { type: Number, select: false }
   })
 

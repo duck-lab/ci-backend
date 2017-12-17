@@ -2,7 +2,7 @@
 
 module.exports = app => {
   class OrganizerService extends app.Service {
-    async find (filter) {
+    async findByFilter (filter) {
       let data = await this.ctx.model.Organizer.find(filter)
       let result = {}
       result.meta = {total: data.length}
@@ -15,22 +15,26 @@ module.exports = app => {
       return data
     }
 
+    async findByName (name) {
+      let data = await this.ctx.model.Organizer.findOne({name})
+      return data
+    }
+
     async create (register) {
       if (!register) { return }
       let data = await this.ctx.model.Organizer.create(register)
       return data
     }
 
-    async update (id, info) {
+    async updateById (id, info) {
       let data = await this.ctx.model.Organizer.findOneAndUpdate({_id: id},
         {$set: info}, {new: true})
       return data
     }
 
-    async destroy (ids) {
-      if (!ids || !ids.length > 0) { return }
-      let data = await this.ctx.model.Organizer.deleteMany({_id: {$in: ids}})
-      return data.result
+    async destroyByFilter (filter) {
+      let data = await this.ctx.model.Organizer.deleteOne(filter)
+      return data
     }
   }
   return OrganizerService

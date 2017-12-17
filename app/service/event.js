@@ -2,7 +2,7 @@
 
 module.exports = app => {
   class EventService extends app.Service {
-    async find (filter) {
+    async findByFilter (filter) {
       let data = await this.ctx.model.Event.find(filter).sort('field -eventStartAt')
       let result = {}
       result.meta = {total: data.length}
@@ -15,22 +15,21 @@ module.exports = app => {
       return data
     }
 
+    async findByName (name) {
+      let data = await this.ctx.model.Event.findOne({title: name})
+      return data
+    }
+
     async create (info) {
       if (!info) { return }
       let data = await this.ctx.model.Event.create(info)
       return data
     }
 
-    async update (id, info) {
+    async updateById (id, info) {
       let data = await this.ctx.model.Event.findOneAndUpdate({_id: id},
         {$set: info}, {new: true})
       return data
-    }
-
-    async destroy (ids) {
-      if (!ids || !ids.length > 0) { return }
-      let data = await this.ctx.model.Event.deleteMany({_id: {$in: ids}})
-      return data.result
     }
   }
 

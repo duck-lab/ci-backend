@@ -4,7 +4,7 @@ const Controller = require('egg').Controller
 
 class EventController extends Controller {
   async getAllEvents (ctx) {
-    ctx.body = await ctx.service.event.find(ctx.query)
+    ctx.body = await ctx.service.event.findByFilter(ctx.query)
   }
 
   async createEvent (ctx) {
@@ -12,29 +12,30 @@ class EventController extends Controller {
   }
 
   async getAuthUserEvents (ctx) {
-    const uid = null // TODO: get auth user info
-    ctx.body = await ctx.service.Register.find({
-      user: uid
+    const { user: currentUser } = ctx
+    ctx.body = await ctx.service.Register.findRegistedEventsByFilter({
+      user: currentUser.id
     })
   }
 
   async getUserEvents (ctx) {
-    const result = await ctx.service.user.find({
+    const result = await ctx.service.user.findByFilter({
       username: ctx.params.username
     })
     const user = result.data[0]
-    ctx.body = await ctx.service.register.find({
+    ctx.body = await ctx.service.register.findRegistedEventsByFilter({
       user: user.id
     })
   }
 
   async getEvent (ctx) {
-    ctx.body = await ctx.service.event.find({title: ctx.params.event})
+    ctx.body = await ctx.service.event.findByName(ctx.params.event)
   }
 
   async updateAnEvent (ctx) {
-    // TODO: check adminiation
-    ctx.body = await ctx.service.event.update(ctx.params.event, ctx.request.body)
+    // TODO: check manager
+    const event = await ctx.service.event.findByName(ctx.params.event)
+    ctx.body = await ctx.service.event.updateById(event.id, ctx.request.body)
   }
 }
 

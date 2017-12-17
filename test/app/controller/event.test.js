@@ -4,7 +4,7 @@ const { app, assert } = require('egg-mock/bootstrap')
 const { flashDB, fixData } = require('../../fixtures/db')
 const eventSource = require('../../fixtures/data/controller_event')
 
-describe('event.js', () => {
+describe('Event Controller', () => {
   const testEvent3 = {
     title: 'Travel Event',
     postImage: 'None',
@@ -107,7 +107,7 @@ describe('event.js', () => {
       })
   })
 
-  // it('should get authed user events list', () => {
-  // TODO: Add test case
-  // })
+  it('should get authed user events list', () => {
+    // TODO: fetch authed user events
+  })
 })

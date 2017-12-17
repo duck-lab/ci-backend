@@ -1,18 +1,15 @@
 'use strict'
 
 const { app, assert } = require('egg-mock/bootstrap')
+const { flashDB } = require('../../fixtures/db')
 
 describe('Event Service', () => {
   let createdEvent = null
 
-  before(() => {
-    const ctx = app.mockContext()
-
-    ctx.model.Event.collection.drop()
-  })
+  before(() => flashDB(app.mongoose, 'checkIn_test'))
 
   describe('Create', () => {
-    const testEvent1 = {
+    const testEvent = {
       title: 'testEvent',
       postImage: 'testImage',
       eventStartAt: new Date('2017-11-20'),
@@ -28,7 +25,7 @@ describe('Event Service', () => {
     it('should create event', async () => {
       const ctx = app.mockContext()
 
-      const event = await ctx.service.event.create(testEvent1)
+      const event = await ctx.service.event.create(testEvent)
       createdEvent = event
       assert(event)
       assert.equal(event.postImage, 'testImage')
@@ -40,21 +37,17 @@ describe('Event Service', () => {
   })
 
   describe('Find', () => {
-    it('should get event by title', async () => {
+    it('should fine event by title', async () => {
       const ctx = app.mockContext()
 
-      const result = await ctx.service.event.find({title: 'testEvent'})
-      const eventInfo = result.data[0]
+      const event = await ctx.service.event.findByName('testEvent')
 
-      assert(result)
-      assert(eventInfo)
-      assert.equal(result.meta.total, 1)
-
-      assert.equal(eventInfo.postImage, 'testImage')
-      assert.equal(eventInfo.country, 'China')
-      assert.equal(eventInfo.province, '上海')
-      assert.equal(eventInfo.city, '上海')
-      assert.equal(eventInfo.address, '静安区')
+      assert(event)
+      assert.equal(event.postImage, 'testImage')
+      assert.equal(event.country, 'China')
+      assert.equal(event.province, '上海')
+      assert.equal(event.city, '上海')
+      assert.equal(event.address, '静安区')
     })
 
     it('should get event with eventId', async () => {
@@ -74,7 +67,7 @@ describe('Event Service', () => {
     it('should update event several fileds with id', async () => {
       const ctx = app.mockContext()
 
-      const event = await ctx.service.event.update(createdEvent.id, {
+      const event = await ctx.service.event.updateById(createdEvent.id, {
         title: 'udpatedTitle',
         postImage: 'updatedImage'
       })
@@ -85,17 +78,6 @@ describe('Event Service', () => {
       assert.equal(event.province, '上海')
       assert.equal(event.city, '上海')
       assert.equal(event.address, '静安区')
-    })
-  })
-
-  describe('Delete', () => {
-    it('should delete events in the list of uids', async () => {
-      const ctx = app.mockContext()
-
-      const result = await ctx.service.event.destroy([createdEvent.id])
-
-      assert(result)
-      assert.equal(result.n, result.ok)
     })
   })
 })
