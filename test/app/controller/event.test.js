@@ -5,6 +5,8 @@ const { flashDB, fixData } = require('../../fixtures/db')
 const eventSource = require('../../fixtures/data/controller_event')
 
 describe('Event Controller', () => {
+  let createdEvent = null
+
   const testEvent3 = {
     title: 'Travel Event',
     postImage: 'None',
@@ -18,7 +20,6 @@ describe('Event Controller', () => {
     address: '静安区',
     checkInType: 'QR_CODE_GENERAL'
   }
-  let createEventId = null
 
   before(() => {
     return flashDB(app.mongoose, 'checkIn_test')
@@ -54,7 +55,7 @@ describe('Event Controller', () => {
         assert.equal(body.country, testEvent3.country)
         assert.equal(body.isAutoCheckIn, false)
         assert.equal(body.isRegisteredOnly, false)
-        createEventId = body._id
+        createdEvent = body
       })
   })
 
@@ -77,7 +78,7 @@ describe('Event Controller', () => {
 
   it('should patch event', () => {
     return app.httpRequest()
-      .patch(`/events/${createEventId}`)
+      .patch(`/events/${createdEvent.title}`)
       .send({
         postImage: 'New Test Image',
         isAutoCheckIn: true
@@ -90,7 +91,6 @@ describe('Event Controller', () => {
         assert.equal(body.isAutoCheckIn, true)
         assert.equal(body.isRegisteredOnly, false)
       })
-      .catch(err => console.log('>>> err', err))
   })
 
   it('should get a use events list ', () => {
