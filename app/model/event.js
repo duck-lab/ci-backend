@@ -16,7 +16,7 @@ module.exports = ({ mongoose }) => {
     address: { type: String, trim: true },
     organizations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Organization' }],
     limitCheckInAmount: { type: Number },
-    isRegisteredOnly: { type: Boolean, default: false },
+    isRegistedOnly: { type: Boolean, default: false },
     checkInType: { type: String, required: true },
     redirect: { type: String },
     subEvents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }],

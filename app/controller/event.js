@@ -13,7 +13,7 @@ class EventController extends Controller {
 
   async getAuthUserEvents (ctx) {
     const { user: currentUser } = ctx
-    ctx.body = await ctx.service.Register.findRegistedEventsByFilter({
+    ctx.body = await ctx.service.Registration.findRegistedEventsByFilter({
       user: currentUser.id
     })
   }
@@ -23,7 +23,7 @@ class EventController extends Controller {
       username: ctx.params.username
     })
     const user = result.data[0]
-    ctx.body = await ctx.service.register.findRegistedEventsByFilter({
+    ctx.body = await ctx.service.registration.findRegistedEventsByFilter({
       user: user.id
     })
   }

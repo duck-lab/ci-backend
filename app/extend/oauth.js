@@ -11,7 +11,7 @@ module.exports = app => {
         clientId: 'test',
         grants: ['password']
       }
-      // TODO: add client register
+      // TODO: add client registration
       // this.ctx.service.accessClient.get('client')
       // if (clientId !== client.clientId || clientSecret !== client.clientSecret) {
       //   return client

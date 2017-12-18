@@ -34,13 +34,13 @@ describe('Event Controller', () => {
         assert.equal(body.meta.total, 3)
         assert.equal(body.data[0].title, 'WeedingEvent')
         assert.equal(body.data[0].isAutoCheckIn, false)
-        assert.equal(body.data[0].isRegisteredOnly, false)
+        assert.equal(body.data[0].isRegistedOnly, false)
         assert.equal(body.data[1].title, 'WiredcraftEvent')
         assert.equal(body.data[1].isAutoCheckIn, false)
-        assert.equal(body.data[1].isRegisteredOnly, false)
+        assert.equal(body.data[1].isRegistedOnly, false)
         assert.equal(body.data[2].title, 'DucklabEvnet')
         assert.equal(body.data[2].isAutoCheckIn, true)
-        assert.equal(body.data[2].isRegisteredOnly, false)
+        assert.equal(body.data[2].isRegistedOnly, false)
       })
   })
 
@@ -54,7 +54,7 @@ describe('Event Controller', () => {
         assert.equal(body.postImage, testEvent3.postImage)
         assert.equal(body.country, testEvent3.country)
         assert.equal(body.isAutoCheckIn, false)
-        assert.equal(body.isRegisteredOnly, false)
+        assert.equal(body.isRegistedOnly, false)
         createdEvent = body
       })
   })
@@ -72,7 +72,7 @@ describe('Event Controller', () => {
         assert.equal(body.data[0].postImage, testEvent3.postImage)
         assert.equal(body.data[0].country, testEvent3.country)
         assert.equal(body.data[0].isAutoCheckIn, false)
-        assert.equal(body.data[0].isRegisteredOnly, false)
+        assert.equal(body.data[0].isRegistedOnly, false)
       })
   })
 
@@ -89,7 +89,7 @@ describe('Event Controller', () => {
         assert.equal(body.postImage, 'New Test Image')
         assert.equal(body.country, testEvent3.country)
         assert.equal(body.isAutoCheckIn, true)
-        assert.equal(body.isRegisteredOnly, false)
+        assert.equal(body.isRegistedOnly, false)
       })
   })
 

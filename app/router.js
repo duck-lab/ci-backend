@@ -32,19 +32,19 @@ module.exports = app => {
   router.get('/events/:event', controller.event.getEvent) // 获取活动通过活动名称
   router.patch('/events/:event', controller.event.updateAnEvent) // 更新活动通过活动名称 >> 认证用户
 
-  // Registers route
-  router.get('/events/:event/registers', controller.register.getEventRegisters) // 获取活动注册用户
-  router.post('/events/:event/register', controller.register.createAuthUserRegister) // 注册活动当前登陆用户 >> 认证用户
+  // Registrations route
+  router.get('/events/:event/registrations', controller.registration.getEventRegistrations) // 获取活动注册用户
+  router.post('/events/:event/registration', controller.registration.createAuthUserRegistration) // 注册活动当前登陆用户 >> 认证用户
   router.get('/user/events', controller.event.getAuthUserEvents) // 获取当前登陆用户的活动 >> 认证用户
-  router.post('/events/:event/register/:user', controller.register.createRegister) // 注册活动用户(管理员) >> 认证用户
-  router.put('/events/:event/checkin', controller.register.checkInAuthUserRegister) // 签到活动当前登陆用户 >> 认证用户
-  router.put('/events/:event/checkin/:user', controller.register.checkInRegister) // 签到活动用户(管理员) >> 认证用户
-  router.put('/events/:event/cancel', controller.register.cancelAuthUserRegister) // 取消签到活动当前登陆用户 >> 认证用户
-  router.put('/events/:event/cancel/:user', controller.register.cancelRegister) // 取消签到活动用户(管理员) >> 认证用户
-  router.delete('/events/:event/registers/:user', controller.register.removeRegister) // 删除活动注册用户(管理员) >> 认证用户
+  router.post('/events/:event/registration/:user', controller.registration.createRegistration) // 注册活动用户(管理员) >> 认证用户
+  router.put('/events/:event/checkin', controller.registration.checkInAuthUserRegistration) // 签到活动当前登陆用户 >> 认证用户
+  router.put('/events/:event/checkin/:user', controller.registration.checkInRegistration) // 签到活动用户(管理员) >> 认证用户
+  router.put('/events/:event/cancel', controller.registration.cancelAuthUserRegistration) // 取消签到活动当前登陆用户 >> 认证用户
+  router.put('/events/:event/cancel/:user', controller.registration.cancelRegistration) // 取消签到活动用户(管理员) >> 认证用户
+  router.delete('/events/:event/registrations/:user', controller.registration.removeRegistration) // 删除活动注册用户(管理员) >> 认证用户
   // TODO：处理无账号的手机用户
-  // router.post('/events/:event/register-by-mobile', controller.register.createRegisterByMobile)
-  // router.put('/events/:event/register-by-mobile', controller.register.checkInRegisterByMobile)
+  // router.post('/events/:event/registration-by-mobile', controller.registration.createRegistrationByMobile)
+  // router.put('/events/:event/registration-by-mobile', controller.registration.checkInRegistrationByMobile)
 
   // Organization route
   router.get('/orgs', controller.organization.getAllOrganizations) // 查看和搜索所有组织

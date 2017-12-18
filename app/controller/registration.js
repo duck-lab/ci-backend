@@ -2,13 +2,13 @@
 
 const Controller = require('egg').Controller
 
-class RegisterController extends Controller {
-  async getEventRegisters (ctx) {
+class RegistrationController extends Controller {
+  async getEventRegistrations (ctx) {
     const event = await ctx.service.event.findByName(ctx.params.event)
-    ctx.body = await ctx.service.register.findRegistedUsersByFilter({event: event.id})
+    ctx.body = await ctx.service.registration.findRegistedUsersByFilter({event: event.id})
   }
 
-  async createAuthUserRegister (ctx) {
+  async createAuthUserRegistration (ctx) {
     const { user: currentUser } = ctx
     const event = await ctx.service.event.findByName(ctx.params.event)
     // TODO: add regist logic
@@ -17,63 +17,63 @@ class RegisterController extends Controller {
 
   async getAuthUserEvents (ctx) {
     const { user: currentUser } = ctx
-    ctx.body = await ctx.service.register.findRegistedEventsByFilter({user: currentUser.id})
+    ctx.body = await ctx.service.registration.findRegistedEventsByFilter({user: currentUser.id})
   }
 
-  async createRegister (ctx) {
+  async createRegistration (ctx) {
     const user = await ctx.service.user.findByName(ctx.params.user)
     const event = await ctx.service.event.findByName(ctx.params.event)
     // TODO: add regist logic and init data
-    ctx.body = await ctx.service.register.create({
+    ctx.body = await ctx.service.registration.create({
       event: event.id,
       user: user.id
     })
   }
 
-  async checkInAuthUserRegister (ctx) {
+  async checkInAuthUserRegistration (ctx) {
     const { user: currentUser } = ctx
     const event = await ctx.service.event.findByName(ctx.params.event)
-    ctx.body = await ctx.service.register.updateByFilter({
+    ctx.body = await ctx.service.registration.updateByFilter({
       event: event.id,
       user: currentUser.id
     }, {isRegisted: true})
   }
 
-  async checkInRegister (ctx) {
+  async checkInRegistration (ctx) {
     const user = await ctx.service.user.findByName(ctx.params.user)
     const event = await ctx.service.event.findByName(ctx.params.event)
-    ctx.body = await ctx.service.register.updateByFilter({
+    ctx.body = await ctx.service.registration.updateByFilter({
       event: event.id,
       user: user.id
     }, {isRegisted: true})
   }
 
-  async cancelAuthUserRegister (ctx) {
+  async cancelAuthUserRegistration (ctx) {
     const { user: currentUser } = ctx
     const event = await ctx.service.event.findByName(ctx.params.event)
-    ctx.body = await ctx.service.register.updateByFilter({
+    ctx.body = await ctx.service.registration.updateByFilter({
       event: event.id,
       user: currentUser.id
     }, {isRegisted: false})
   }
 
-  async cancelRegister (ctx) {
+  async cancelRegistration (ctx) {
     const user = await ctx.service.user.findByName(ctx.params.user)
     const event = await ctx.service.event.findByName(ctx.params.event)
-    ctx.body = await ctx.service.register.updateByFilter({
+    ctx.body = await ctx.service.registration.updateByFilter({
       event: event.id,
       user: user.id
     }, {isRegisted: false})
   }
 
-  async removeRegister (ctx) {
+  async removeRegistration (ctx) {
     const user = await ctx.service.user.findByName(ctx.params.user)
     const event = await ctx.service.event.findByName(ctx.params.event)
-    ctx.body = await ctx.service.register.destroyByFilter({
+    ctx.body = await ctx.service.registration.destroyByFilter({
       event: event.id,
       user: user.id
     })
   }
 }
 
-module.exports = RegisterController
+module.exports = RegistrationController

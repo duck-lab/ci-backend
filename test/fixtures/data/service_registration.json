@@ -65,7 +65,7 @@
       "checkInType": "QR_CODE_GENERAL"
     }
   ],
-  "Register": [
+  "Registration": [
     {
       "user": "#User#username#ole3021",
       "event": "#Event#title#DucklabEvnet",

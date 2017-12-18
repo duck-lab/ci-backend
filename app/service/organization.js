@@ -20,9 +20,9 @@ module.exports = app => {
       return data
     }
 
-    async create (register) {
-      if (!register) { return }
-      let data = await this.ctx.model.Organization.create(register)
+    async create (registration) {
+      if (!registration) { return }
+      let data = await this.ctx.model.Organization.create(registration)
       return data
     }
 

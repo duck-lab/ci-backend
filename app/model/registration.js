@@ -3,7 +3,7 @@
 const timestamps = require('mongoose-timestamp')
 
 module.exports = ({ mongoose }) => {
-  const RegisterSchema = new mongoose.Schema({
+  const RegistrationSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', index: true },
     event: { type: mongoose.Schema.Types.ObjectId, ref: 'Event', index: true },
     mobile: { type: String, index: true },
@@ -12,9 +12,9 @@ module.exports = ({ mongoose }) => {
     __v: { type: Number, select: false }
   })
 
-  RegisterSchema.plugin(timestamps)
+  RegistrationSchema.plugin(timestamps)
 
-  RegisterSchema.index({user: 1, event: 1}, { unique: true }) // build multi key index.
+  RegistrationSchema.index({user: 1, event: 1}, { unique: true }) // build multi key index.
 
-  return mongoose.model('Register', RegisterSchema)
+  return mongoose.model('Registration', RegistrationSchema)
 }

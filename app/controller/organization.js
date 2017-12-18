@@ -18,7 +18,7 @@ class OrganizationController extends Controller {
 
   async getUserOrganizations (ctx) {
     const user = await ctx.service.user.findByName(ctx.params.name)
-    ctx.body = await ctx.service.register.findManagedOrgs(user.id)
+    ctx.body = await ctx.service.registration.findManagedOrgs(user.id)
   }
 
   async getOrganization (ctx) {
