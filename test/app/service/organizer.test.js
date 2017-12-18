@@ -9,7 +9,7 @@ describe('Organizer Service', () => {
   before(() => flashDB(app.mongoose, 'checkIn_test'))
 
   describe('Create', () => {
-    const testUser = {
+    const testOrganizer = {
       name: 'organizerName',
       logo: 'http://logo.com/logo',
       contact: '+86 201 1234567',
@@ -20,7 +20,7 @@ describe('Organizer Service', () => {
     it('should create organizer', async () => {
       const ctx = app.mockContext()
 
-      const organizer = await ctx.service.organizer.create(testUser)
+      const organizer = await ctx.service.organizer.create(testOrganizer)
       createdOrganizer = organizer
       assert(organizer)
       assert.equal(organizer.name, 'organizerName')
@@ -33,7 +33,7 @@ describe('Organizer Service', () => {
   })
 
   describe('Find', () => {
-    it('should get organizer by name', async () => {
+    it('should find organizer by filter', async () => {
       const ctx = app.mockContext()
 
       const result = await ctx.service.organizer.findByFilter({name: 'organizerName'})
@@ -51,7 +51,20 @@ describe('Organizer Service', () => {
       assert.equal(organizerInfo.site, 'http://ole3021.me')
     })
 
-    it('should get user with userId', async () => {
+    it('should find organizer by name', async () => {
+      const ctx = app.mockContext()
+
+      const organizer = await ctx.service.organizer.findByName('organizerName')
+      assert(organizer)
+      assert.equal(organizer.name, 'organizerName')
+      assert.equal(organizer.logo, 'http://logo.com/logo')
+      assert.equal(organizer.contact, '+86 201 1234567')
+      assert.equal(organizer.email, 'ole3021@gmail.com')
+      assert.equal(organizer.address, '上海市静安区')
+      assert.equal(organizer.site, 'http://ole3021.me')
+    })
+
+    it('should find user with userId', async () => {
       const ctx = app.mockContext()
 
       const organizer = await ctx.service.organizer.findById(createdOrganizer.id)
@@ -66,7 +79,7 @@ describe('Organizer Service', () => {
   })
 
   describe('Update', () => {
-    it('should update user several fileds with id', async () => {
+    it('should update user several fileds with orgId', async () => {
       const ctx = app.mockContext()
 
       const organizer = await ctx.service.organizer.updateById(createdOrganizer.id, {

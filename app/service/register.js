@@ -18,6 +18,11 @@ module.exports = app => {
       return result
     }
 
+    async findRegisterByCode (code) {
+      let data = await this.ctx.model.Register.findOne({registCode: code}).populate(['user', 'event'])
+      return data
+    }
+
     async create (register) {
       if (!register) { return }
       let data = await this.ctx.model.Register.create(register)

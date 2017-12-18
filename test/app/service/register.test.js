@@ -1,120 +1,107 @@
-// 'use strict'
+'use strict'
 
-// const { app, assert } = require('egg-mock/bootstrap')
-// const { flashDB } = require('../../fixtures/db')
+const { app, assert } = require('egg-mock/bootstrap')
+const { flashDB, fixData } = require('../../fixtures/db')
+const registerSource = require('../../fixtures/data/service_register')
 
-// describe('Register Service', () => {
-//   let createdRegister = null
-//   let rUser = null
-//   let rEvent = null
-//   let testRegister1 = null
+describe('Register Service', () => {
+  let createdRegister = null
+  let registerUser = null
+  let registerEvent = null
 
-//   before(() => flashDB(app.mongoose, 'checkIn_test'))
+  before(async () => flashDB(app.mongoose, 'checkIn_test')
+    .then(fixData(app.mongoose, registerSource)))
 
-//   describe('Create', () => {
-//     const testUser1 = {
-//       password: 'regTestPassword',
-//       secretSalt: 'regTestSalt',
-//       mobile: '+86 18303033333',
-//       email: 'ole3023@gmail.com',
-//       username: 'ole3033',
-//       realName: 'Oliver.W',
-//       country: 'China',
-//       province: '上海',
-//       city: '上海',
-//       address: '静安区'
-//     }
+  describe('Create', () => {
+    it('should create register', async () => {
+      const ctx = app.mockContext()
 
-//     const testEvent1 = {
-//       title: 'regTestEvnet',
-//       postImage: 'RegTestImage',
-//       eventStartAt: new Date('2017-11-20'),
-//       eventEndAt: new Date('2017-11-21'),
-//       checkInStartAt: new Date('2017-11-20'),
-//       checkInEndAt: new Date('2017-11-20'),
-//       country: 'China',
-//       province: '上海',
-//       city: '上海',
-//       address: '静安区',
-//       checkInType: 'QR_CODE_GENERAL'
-//     }
+      registerUser = await ctx.service.user.findByName('ole3021')
+      registerEvent = await ctx.service.event.findByName('WeedingEvent')
 
-//     before(async () => {
-//       const ctx = app.mockContext()
+      const testRegister = {
+        user: registerUser.id,
+        event: registerEvent.id,
+        registCode: 'testRegCode'
+      }
 
-//       rUser = await ctx.service.user.create(testUser1)
-//       rEvent = await ctx.service.event.create(testEvent1)
+      const register = await ctx.service.register.create(testRegister)
+      createdRegister = register
+      assert(createdRegister)
+      assert.equal(createdRegister.user, registerUser.id)
+      assert.equal(createdRegister.event, registerEvent.id)
+      assert.equal(createdRegister.registCode, 'testRegCode')
+    })
+  })
 
-//       testRegister1 = {
-//         user: rUser.id,
-//         event: rEvent.id,
-//         registCode: 'testRegCode1'
-//       }
-//     })
+  describe('Find', () => {
+    it('shuold find registedEvent by filter', async () => {
+      const ctx = app.mockContext()
 
-//     it('should create register', async () => {
-//       const ctx = app.mockContext()
+      const result = await ctx.service.register.findRegistedEventsByFilter({
+        user: registerUser.id
+      })
+      const registedEvents = result.data
 
-//       const register = await ctx.service.register.create(testRegister1)
-//       createdRegister = register
-//       assert(createdRegister)
-//       assert.equal(createdRegister.user, rUser.id)
-//       assert.equal(createdRegister.event, rEvent.id)
-//       assert.equal(createdRegister.registCode, 'testRegCode1')
-//     })
-//   })
+      assert(result)
+      assert.equal(result.meta.total, 3)
+      assert.equal(registedEvents[0].event.title, 'WeedingEvent')
+      assert.equal(registedEvents[1].event.title, 'WiredcraftEvent')
+    })
 
-//   describe('Find', () => {
-//     it('should get resgister by registCode', async () => {
-//       const ctx = app.mockContext()
+    it('should find registedUser by filter', async () => {
+      const ctx = app.mockContext()
 
-//       const result = await ctx.service.register.find({registCode: 'testRegCode1'})
-//       const registerInfo = result.data[0]
+      const result = await ctx.service.register.findRegistedUsersByFilter({
+        event: registerEvent.id
+      })
+      const registedUsers = result.data
 
-//       assert(result)
-//       assert(registerInfo)
-//       assert.equal(result.meta.total, 1)
+      assert(result)
+      assert.equal(result.meta.total, 2)
+      assert.equal(registedUsers[0].user.username, 'ole3021')
+      assert.equal(registedUsers[1].user.username, 'oliver')
+    })
 
-//       assert.equal(registerInfo.user, rUser.id)
-//       assert.equal(registerInfo.event.id, rEvent.id)
-//       assert.equal(registerInfo.registCode, 'testRegCode1')
-//     })
+    it('should find resgister by registCode', async () => {
+      const ctx = app.mockContext()
 
-//     it('should get resgister with userId', async () => {
-//       const ctx = app.mockContext()
+      const register = await ctx.service.register.findRegisterByCode('testRegCode')
 
-//       const register = await ctx.service.register.findById(createdRegister.id)
-//       assert(register)
-//       assert.equal(register.user, rUser.id)
-//       assert.equal(register.event, rEvent.id)
-//       assert.equal(register.registCode, 'testRegCode1')
-//     })
-//   })
+      assert(register)
 
-//   describe('Update', () => {
-//     it('should update resgister several fileds with id', async () => {
-//       const ctx = app.mockContext()
+      assert.equal(register.user.username, 'ole3021')
+      assert.equal(register.event.title, 'WeedingEvent')
+    })
+  })
 
-//       const register = await ctx.service.register.update(createdRegister.id, {
-//         isRegisted: 'true'
-//       })
+  describe('Update', () => {
+    it('should update resgister several fileds by filter', async () => {
+      const ctx = app.mockContext()
 
-//       assert(register)
-//       assert.equal(register.user, rUser.id)
-//       assert.equal(register.event, rEvent.id)
-//       assert.equal(register.registCode, 'testRegCode1')
-//       assert.equal(register.isRegisted, true)
-//     })
-//   })
+      const result = await ctx.service.register.updateByFilter({
+        user: registerUser.id,
+        event: registerEvent.id
+      }, {
+        isRegisted: 'true'
+      })
 
-//   describe('Delete', () => {
-//     it('should delete resgister in the list of uids', async () => {
-//       const ctx = app.mockContext()
+      assert(result)
+      assert.equal(result.n, result.ok)
+    })
+  })
 
-//       const result = await ctx.service.register.destroy([createdRegister.id])
+  describe('Delete', () => {
+    it('should delete resgister by filter', async () => {
+      const ctx = app.mockContext()
 
-//       assert(result)
-//       assert.equal(result.n, result.ok)
-//     })
-//   })
-// })
+      const result = await ctx.service.register.destroyByFilter({
+        user: registerUser.id,
+        event: registerEvent.id
+      })
+
+      assert(result)
+      assert.equal(result.n, result.ok)
+    })
+  })
+})

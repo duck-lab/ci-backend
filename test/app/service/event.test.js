@@ -37,6 +37,20 @@ describe('Event Service', () => {
   })
 
   describe('Find', () => {
+    it('should find event by filter', async () => {
+      const ctx = app.mockContext()
+
+      const result = await ctx.service.event.findByFilter({title: 'testEvent'})
+      const event = result.data[0]
+
+      assert(event)
+      assert.equal(event.postImage, 'testImage')
+      assert.equal(event.country, 'China')
+      assert.equal(event.province, '上海')
+      assert.equal(event.city, '上海')
+      assert.equal(event.address, '静安区')
+    })
+
     it('should fine event by title', async () => {
       const ctx = app.mockContext()
 
@@ -50,7 +64,7 @@ describe('Event Service', () => {
       assert.equal(event.address, '静安区')
     })
 
-    it('should get event with eventId', async () => {
+    it('should get event by eventId', async () => {
       const ctx = app.mockContext()
 
       const event = await ctx.service.event.findById(createdEvent.id)
@@ -64,7 +78,7 @@ describe('Event Service', () => {
   })
 
   describe('Update', () => {
-    it('should update event several fileds with id', async () => {
+    it('should update event several fileds by eventId', async () => {
       const ctx = app.mockContext()
 
       const event = await ctx.service.event.updateById(createdEvent.id, {

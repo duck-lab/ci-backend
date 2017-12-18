@@ -23,7 +23,7 @@ describe('AccessToken Service', () => {
       }
     }
 
-    it('shoulc create accessToken', async () => {
+    it('should create accessToken', async () => {
       const ctx = app.mockContext()
 
       const accessToken = await ctx.service.accessToken.create(testAccessToken)
@@ -35,8 +35,8 @@ describe('AccessToken Service', () => {
     })
   })
 
-  describe('Find Token', () => {
-    it('should find token', async () => {
+  describe('Find by Token', () => {
+    it('should find accessToken by token', async () => {
       const ctx = app.mockContext()
 
       const accessToken = await ctx.service.accessToken.findByToken(createdAccessToken.accessToken)
@@ -47,8 +47,8 @@ describe('AccessToken Service', () => {
     })
   })
 
-  describe('Destroy Token', () => {
-    it('should destroy token', async () => {
+  describe('Destroy by Token', () => {
+    it('should destroy accessToken by token', async () => {
       const ctx = app.mockContext()
 
       const result = await ctx.service.accessToken.destroyByToken(createdAccessToken.accessToken)
