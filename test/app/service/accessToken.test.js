@@ -17,7 +17,7 @@ describe('AccessToken Service', () => {
       user: {
         userId: '5a36218c24f8a67541b25092'
       },
-      'client': {
+      client: {
         grants: ['password'],
         clientId: 'test'
       }

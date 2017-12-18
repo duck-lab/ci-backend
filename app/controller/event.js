@@ -12,8 +12,12 @@ class EventController extends Controller {
   }
 
   async getAuthUserEvents (ctx) {
+    const token = await ctx.service.accessToken.findByToken('testToken')
+    console.log('>>> token', token)
     const { user: currentUser } = ctx
-    ctx.body = await ctx.service.Registration.findRegistedEventsByFilter({
+
+    console.log('>>> cuuu', currentUser)
+    ctx.body = await ctx.service.registration.findRegistedEventsByFilter({
       user: currentUser.id
     })
   }

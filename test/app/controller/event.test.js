@@ -7,7 +7,7 @@ const eventSource = require('../../fixtures/data/controller_event')
 describe('Event Controller', () => {
   let createdEvent = null
 
-  const testEvent3 = {
+  const testEvent = {
     title: 'Travel Event',
     postImage: 'None',
     eventStartAt: new Date('2017-11-20'),
@@ -45,12 +45,12 @@ describe('Event Controller', () => {
   it('should create event', () => {
     return app.httpRequest()
       .post('/events')
-      .send(testEvent3)
+      .send(testEvent)
       .expect(200)
       .then(({ body }) => {
-        assert.equal(body.title, testEvent3.title)
-        assert.equal(body.postImage, testEvent3.postImage)
-        assert.equal(body.country, testEvent3.country)
+        assert.equal(body.title, testEvent.title)
+        assert.equal(body.postImage, testEvent.postImage)
+        assert.equal(body.country, testEvent.country)
         assert.equal(body.isAutoCheckIn, false)
         assert.equal(body.isRegistedOnly, false)
         createdEvent = body
@@ -66,9 +66,9 @@ describe('Event Controller', () => {
       .expect(200)
       .then(({ body }) => {
         assert(body.meta.total)
-        assert.equal(body.data[0].title, testEvent3.title)
-        assert.equal(body.data[0].postImage, testEvent3.postImage)
-        assert.equal(body.data[0].country, testEvent3.country)
+        assert.equal(body.data[0].title, testEvent.title)
+        assert.equal(body.data[0].postImage, testEvent.postImage)
+        assert.equal(body.data[0].country, testEvent.country)
         assert.equal(body.data[0].isAutoCheckIn, false)
         assert.equal(body.data[0].isRegistedOnly, false)
       })
@@ -83,9 +83,9 @@ describe('Event Controller', () => {
       })
       .expect(200)
       .then(({ body }) => {
-        assert.equal(body.title, testEvent3.title)
+        assert.equal(body.title, testEvent.title)
         assert.equal(body.postImage, 'New Test Image')
-        assert.equal(body.country, testEvent3.country)
+        assert.equal(body.country, testEvent.country)
         assert.equal(body.isAutoCheckIn, true)
         assert.equal(body.isRegistedOnly, false)
       })
@@ -96,7 +96,6 @@ describe('Event Controller', () => {
       .get('/users/ole3021/events')
       .expect(200)
       .then(({ body }) => {
-        // TODO: Order not fixed
         assert.equal(body.meta.total, 2)
         assert(body.data[0].event.title)
         assert(body.data[0].registCode)
@@ -106,6 +105,12 @@ describe('Event Controller', () => {
   })
 
   it('should get authed user events list', () => {
-    // TODO: fetch authed user events
+    return app.httpRequest()
+      .get('/user/events')
+      .set('Authorization', 'Bearer testToken')
+      .expect(200)
+      .then(({ body }) => {
+        console.log('>>> bod', body)
+      })
   })
 })
