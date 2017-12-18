@@ -1,6 +1,6 @@
 'use strict'
 
-const injector = require('json-mongo-injector')
+const injector = require('moh-mongo-injector')
 
 exports.flashDB = (mongoose, databaseName) => {
   return Promise.all(mongoose.modelNames().map(modelName =>
