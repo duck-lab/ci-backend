@@ -13,7 +13,7 @@ module.exports = ({ mongoose }) => {
 
   ManagerSchema.plugin(timestamps)
 
-  ManagerSchema.index({user: 1, event: 1}, { unique: true }) // build multi key index.
+  ManagerSchema.index({user: 1, event: 1, organizer: 1}, { unique: true }) // build multi key index.
 
   return mongoose.model('Manager', ManagerSchema)
 }

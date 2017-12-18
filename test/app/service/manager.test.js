@@ -1,116 +1,125 @@
 'use strict'
 
 const { app, assert } = require('egg-mock/bootstrap')
-const { flashDB } = require('../../fixtures/db')
+const { flashDB, fixData } = require('../../fixtures/db')
+const managerSource = require('../../fixtures/data/service_manager')
 
 describe('Manager Service', () => {
-  let createdManager = null
-  let rUser = null
-  let rEvent = null
-  let testManager1 = null
+  let managerUser = null
+  let managerEvent = null
+  let managerOrganizer = null
 
-  before(() => flashDB(app.mongoose, 'checkIn_test'))
+  before(() => flashDB(app.mongoose, 'checkIn_test')
+  .then(fixData(app.mongoose, managerSource)))
 
   describe('Create', () => {
-    const testUser1 = {
-      password: 'regTestPassword',
-      secretSalt: 'regTestSalt',
-      mobile: '+86 18303033222',
-      email: 'ole301@gmail.com',
-      username: 'ole3022',
-      realName: 'Oliver.W',
-      country: 'China',
-      province: '上海',
-      city: '上海',
-      address: '静安区'
-    }
-
-    const testEvent1 = {
-      title: 'manTestEvnet',
-      postImage: 'manTestImage',
-      eventStartAt: new Date('2017-11-20'),
-      eventEndAt: new Date('2017-11-21'),
-      checkInStartAt: new Date('2017-11-20'),
-      checkInEndAt: new Date('2017-11-20'),
-      country: 'China',
-      province: '上海',
-      city: '上海',
-      address: '静安区',
-      checkInType: 'QR_CODE_GENERAL'
-    }
-
-    before(async () => {
+    it('should create event manager', async () => {
       const ctx = app.mockContext()
 
-      rUser = await ctx.service.user.create(testUser1)
-      rEvent = await ctx.service.event.create(testEvent1)
+      managerUser = await ctx.service.user.findByName('ole3021')
+      managerEvent = await ctx.service.event.findByName('DucklabEvnet')
 
-      testManager1 = {
-        user: rUser.id,
-        event: rEvent.id,
+      const testManager = {
+        user: managerUser.id,
+        event: managerEvent.id,
         role: 'ADMIN'
       }
-    })
 
-    it('should create manager', async () => {
-      const ctx = app.mockContext()
-
-      const manager = await ctx.service.manager.create(testManager1)
-      createdManager = manager
-      assert(createdManager)
-      assert.equal(createdManager.user, rUser.id)
-      assert.equal(createdManager.event, rEvent.id)
-      assert.equal(createdManager.role, 'ADMIN')
-    })
-  })
-
-  describe('Find', () => {
-    it('should get manager by user and event', async () => {
-      const ctx = app.mockContext()
-
-      const result = await ctx.service.manager.findByFilter({user: rUser.id, event: rEvent.id})
-      const managerInfo = result.data[0]
-
-      assert(result)
-      assert(managerInfo)
-      assert.equal(result.meta.total, 1)
-
-      assert.equal(managerInfo.user, rUser.id)
-      assert.equal(managerInfo.event, rEvent.id)
-      assert.equal(managerInfo.role, 'ADMIN')
-    })
-
-    it('should get manager with userId', async () => {
-      const ctx = app.mockContext()
-
-      const manager = await ctx.service.manager.findById(createdManager.id)
+      const manager = await ctx.service.manager.create(testManager)
       assert(manager)
-      assert.equal(manager.user, rUser.id)
-      assert.equal(manager.event, rEvent.id)
+      assert.equal(manager.user, managerUser.id)
+      assert.equal(manager.event, managerEvent.id)
+      assert.equal(manager.role, 'ADMIN')
+    })
+
+    it('should create event manager', async () => {
+      const ctx = app.mockContext()
+
+      managerUser = await ctx.service.user.findByName('ole3021')
+      managerOrganizer = await ctx.service.organizer.findByName('Ducklab')
+
+      const testManager = {
+        user: managerUser.id,
+        organizer: managerOrganizer.id,
+        role: 'ADMIN'
+      }
+
+      const manager = await ctx.service.manager.create(testManager)
+      assert(manager)
+      assert.equal(manager.user, managerUser.id)
+      assert.equal(manager.organizer, managerOrganizer.id)
       assert.equal(manager.role, 'ADMIN')
     })
   })
 
-  describe('Update', () => {
-    it('should update manager several fileds with id', async () => {
+  describe('Find', () => {
+    it('should find event manager by filter', async () => {
       const ctx = app.mockContext()
 
-      const manager = await ctx.service.manager.updateById(createdManager.id, {
+      const result = await ctx.service.manager.findOneByFilter({user: managerUser.id, event: managerEvent.id})
+
+      assert(result)
+
+      assert.equal(result.user, managerUser.id)
+      assert.equal(result.event, managerEvent.id)
+      assert.equal(result.role, 'ADMIN')
+    })
+
+    it('should find organizer manager by filter', async () => {
+      const ctx = app.mockContext()
+
+      const result = await ctx.service.manager.findOneByFilter({user: managerUser.id, organizer: managerOrganizer.id})
+
+      assert(result)
+
+      assert.equal(result.user, managerUser.id)
+      assert.equal(result.organizer, managerOrganizer.id)
+      assert.equal(result.role, 'ADMIN')
+    })
+  })
+
+  describe('Update', () => {
+    it('should update event manager several fileds with filter', async () => {
+      const ctx = app.mockContext()
+
+      const manager = await ctx.service.manager.updateByFilter({
+        user: managerUser.id,
+        event: managerEvent.id
+      }, {
         role: 'VIEWER'
       })
 
       assert(manager)
-      assert.equal(manager.user, rUser.id)
-      assert.equal(manager.event, rEvent.id)
+      assert.equal(manager.user, managerUser.id)
+      assert.equal(manager.event, managerEvent.id)
+      assert.equal(manager.role, 'VIEWER')
+    })
+
+    it('should update organizer manager several fileds with filter', async () => {
+      const ctx = app.mockContext()
+
+      const manager = await ctx.service.manager.updateByFilter({
+        user: managerUser.id,
+        organizer: managerOrganizer.id
+      }, {
+        role: 'VIEWER'
+      })
+
+      assert(manager)
+      assert.equal(manager.user, managerUser.id)
+      assert.equal(manager.organizer, managerOrganizer.id)
       assert.equal(manager.role, 'VIEWER')
     })
   })
 
   describe('Delete', () => {
-    it('should delete manager in the list of uids', async () => {
+    it('should delete manager by filter', async () => {
       const ctx = app.mockContext()
 
-      const result = await ctx.service.manager.destroyByFilter({_id: createdManager.id})
+      const result = await ctx.service.manager.destroyByFilter({
+        user: managerUser.id,
+        organizer: managerOrganizer.id
+      })
 
       assert(result)
       assert.equal(result.n, result.ok)

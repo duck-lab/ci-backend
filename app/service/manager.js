@@ -2,27 +2,20 @@
 
 module.exports = app => {
   class ManagerService extends app.Service {
-    async findByFilter (filter) {
-      let data = await this.ctx.model.Manager.find(filter)
-      let result = {}
-      result.meta = {total: data.length}
-      result.data = data
-      return result
-    }
-
-    async findById (id) {
-      let data = await this.ctx.model.Manager.findById(id)
+    async findOneByFilter (filter) {
+      let data = await this.ctx.model.Manager.findOne(filter)
       return data
     }
 
     async create (register) {
       if (!register) { return }
+      // TODO: exist event or organizer only
       let data = await this.ctx.model.Manager.create(register)
       return data
     }
 
-    async updateById (id, info) {
-      let data = await this.ctx.model.Manager.findOneAndUpdate({_id: id},
+    async updateByFilter (filter, info) {
+      let data = await this.ctx.model.Manager.findOneAndUpdate(filter,
         {$set: info}, {new: true})
       return data
     }

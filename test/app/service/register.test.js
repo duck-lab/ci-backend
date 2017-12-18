@@ -9,7 +9,7 @@ describe('Register Service', () => {
   let registerUser = null
   let registerEvent = null
 
-  before(async () => flashDB(app.mongoose, 'checkIn_test')
+  before(() => flashDB(app.mongoose, 'checkIn_test')
     .then(fixData(app.mongoose, registerSource)))
 
   describe('Create', () => {
