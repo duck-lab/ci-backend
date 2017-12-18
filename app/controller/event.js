@@ -33,7 +33,7 @@ class EventController extends Controller {
   }
 
   async updateAnEvent (ctx) {
-    // TODO: check manager
+    // TODO: check management
     const event = await ctx.service.event.findByName(ctx.params.event)
     ctx.body = await ctx.service.event.updateById(event.id, ctx.request.body)
   }

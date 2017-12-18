@@ -54,12 +54,12 @@ module.exports = app => {
   router.get('/orgs/:org', controller.organization.getOrganization) // 获取组织通过组织名称
   router.patch('/orgs/:org', controller.organization.updateOrganization) // 更新组织通过活动名称 >> 认证用户
 
-  // Manager route
-  router.get('/events/:event/managers', controller.manager.getEventManagers) // 查看活动的所有管理者
-  router.post('/events/:event/managers/:user', controller.manager.createEventManager) // 注册活动的管理者(管理员) >> 认证用户
-  router.put('/events/:event/managers/:user', controller.manager.udpateEventManager) // 更新活动的管理者(管理员) >> 认证用户
-  router.delete('/events/:event/managers/:user', controller.manager.removeEventManager) // 删除活动管理者(管理员) >> 认证用户
-  router.post('/orgs/:org/managers/:user', controller.manager.createOrgManager) // 注册组织的管理者(管理员) >> 认证用户
-  router.put('/orgs/:org/managers/:user', controller.manager.udpateOrgManager) // 更新组织的管理者(管理员) >> 认证用户
-  router.delete('/orgs/:org/managers/:user', controller.manager.removeOrgManager) // 删除活动管理者(管理员) >> 认证用户
+  // Management route
+  router.get('/events/:event/managements', controller.management.getEventManagements) // 查看活动的所有管理者
+  router.post('/events/:event/managements/:user', controller.management.createEventManagement) // 注册活动的管理者(管理员) >> 认证用户
+  router.put('/events/:event/managements/:user', controller.management.udpateEventManagement) // 更新活动的管理者(管理员) >> 认证用户
+  router.delete('/events/:event/managements/:user', controller.management.removeEventManagement) // 删除活动管理者(管理员) >> 认证用户
+  router.post('/orgs/:org/managements/:user', controller.management.createOrgManagement) // 注册组织的管理者(管理员) >> 认证用户
+  router.put('/orgs/:org/managements/:user', controller.management.udpateOrgManagement) // 更新组织的管理者(管理员) >> 认证用户
+  router.delete('/orgs/:org/managements/:user', controller.management.removeOrgManagement) // 删除活动管理者(管理员) >> 认证用户
 }

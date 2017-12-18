@@ -13,7 +13,7 @@ class OrganizationController extends Controller {
 
   async getAuthUserOrganizations (ctx) {
     const { user: currentUser } = ctx
-    ctx.body = await ctx.service.manager.findManagedOrgs(currentUser.id)
+    ctx.body = await ctx.service.management.findManagedOrgs(currentUser.id)
   }
 
   async getUserOrganizations (ctx) {
