@@ -21,10 +21,8 @@ describe('Event Controller', () => {
     checkInType: 'QR_CODE_GENERAL'
   }
 
-  before(() => {
-    return flashDB(app.mongoose, 'checkIn_test')
-      .then(fixData(app.mongoose, eventSource))
-  })
+  before(() => flashDB(app.mongoose, 'checkIn_test')
+    .then(() => fixData(app.mongoose, eventSource)))
 
   it('should get all event', () => {
     return app.httpRequest()

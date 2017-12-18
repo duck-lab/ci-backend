@@ -10,7 +10,7 @@ describe('Registration Service', () => {
   let registrationEvent = null
 
   before(() => flashDB(app.mongoose, 'checkIn_test')
-    .then(fixData(app.mongoose, registrationSource)))
+    .then(() => fixData(app.mongoose, registrationSource)))
 
   describe('Create', () => {
     it('should create registration', async () => {
