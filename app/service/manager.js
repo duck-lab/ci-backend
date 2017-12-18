@@ -9,7 +9,7 @@ module.exports = app => {
 
     async create (register) {
       if (!register) { return }
-      // TODO: exist event or organizer only
+      // TODO: exist event or Organization only
       let data = await this.ctx.model.Manager.create(register)
       return data
     }

@@ -54,7 +54,7 @@
       "checkInType": "QR_CODE_GENERAL"
     }
   ],
-  "Organizer": [
+  "Organization": [
     {
       "name": "Ducklab",
       "logo": "https://avatars0.githubusercontent.com/u/32359532?s=70&v=4",
@@ -87,7 +87,7 @@
     },
     {
       "user": "#User#username#ole3021",
-      "organizer": "#Organizer#name#Wiredcraft",
+      "organization": "#Organization#name#Wiredcraft",
       "role": "ADMIN"
     }
   ]

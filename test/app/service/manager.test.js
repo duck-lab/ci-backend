@@ -7,7 +7,7 @@ const managerSource = require('../../fixtures/data/service_manager')
 describe('Manager Service', () => {
   let managerUser = null
   let managerEvent = null
-  let managerOrganizer = null
+  let managerOrganization = null
 
   before(() => flashDB(app.mongoose, 'checkIn_test')
   .then(fixData(app.mongoose, managerSource)))
@@ -36,18 +36,18 @@ describe('Manager Service', () => {
       const ctx = app.mockContext()
 
       managerUser = await ctx.service.user.findByName('ole3021')
-      managerOrganizer = await ctx.service.organizer.findByName('Ducklab')
+      managerOrganization = await ctx.service.organization.findByName('Ducklab')
 
       const testManager = {
         user: managerUser.id,
-        organizer: managerOrganizer.id,
+        organization: managerOrganization.id,
         role: 'ADMIN'
       }
 
       const manager = await ctx.service.manager.create(testManager)
       assert(manager)
       assert.equal(manager.user, managerUser.id)
-      assert.equal(manager.organizer, managerOrganizer.id)
+      assert.equal(manager.organization, managerOrganization.id)
       assert.equal(manager.role, 'ADMIN')
     })
   })
@@ -65,15 +65,18 @@ describe('Manager Service', () => {
       assert.equal(result.role, 'ADMIN')
     })
 
-    it('should find organizer manager by filter', async () => {
+    it('should find Organization manager by filter', async () => {
       const ctx = app.mockContext()
 
-      const result = await ctx.service.manager.findOneByFilter({user: managerUser.id, organizer: managerOrganizer.id})
+      const result = await ctx.service.manager.findOneByFilter({
+        user: managerUser.id,
+        organization: managerOrganization.id
+      })
 
       assert(result)
 
       assert.equal(result.user, managerUser.id)
-      assert.equal(result.organizer, managerOrganizer.id)
+      assert.equal(result.organization, managerOrganization.id)
       assert.equal(result.role, 'ADMIN')
     })
   })
@@ -95,19 +98,19 @@ describe('Manager Service', () => {
       assert.equal(manager.role, 'VIEWER')
     })
 
-    it('should update organizer manager several fileds with filter', async () => {
+    it('should update Organization manager several fileds with filter', async () => {
       const ctx = app.mockContext()
 
       const manager = await ctx.service.manager.updateByFilter({
         user: managerUser.id,
-        organizer: managerOrganizer.id
+        organization: managerOrganization.id
       }, {
         role: 'VIEWER'
       })
 
       assert(manager)
       assert.equal(manager.user, managerUser.id)
-      assert.equal(manager.organizer, managerOrganizer.id)
+      assert.equal(manager.organization, managerOrganization.id)
       assert.equal(manager.role, 'VIEWER')
     })
   })
@@ -118,7 +121,7 @@ describe('Manager Service', () => {
 
       const result = await ctx.service.manager.destroyByFilter({
         user: managerUser.id,
-        organizer: managerOrganizer.id
+        organization: managerOrganization.id
       })
 
       assert(result)

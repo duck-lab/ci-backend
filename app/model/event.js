@@ -14,7 +14,7 @@ module.exports = ({ mongoose }) => {
     province: { type: String },
     city: { type: String },
     address: { type: String, trim: true },
-    organizers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Organizer' }],
+    organizations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Organization' }],
     limitCheckInAmount: { type: Number },
     isRegisteredOnly: { type: Boolean, default: false },
     checkInType: { type: String, required: true },
