@@ -1,6 +1,9 @@
 'use strict'
 
 const Controller = require('egg').Controller
+const { MANAGEMENT_ROLE } = require('../public/enum')
+
+const MANAGER_ROLE_KEYS = Object.keys(MANAGEMENT_ROLE)
 
 class EventController extends Controller {
   async getAllEvents (ctx) {
@@ -36,11 +39,20 @@ class EventController extends Controller {
   }
 
   async updateAnEvent (ctx) {
-    // const { user: currentUser } = ctx
-    // TODO: add logic
-
+    const { user: currentUser } = ctx
     const event = await ctx.service.event.findByName(ctx.params.event)
-    ctx.body = await ctx.service.event.updateById(event.id, ctx.request.body)
+
+    const management = await ctx.service.management.findOneByFilter({
+      user: currentUser.id,
+      event: event.id
+    })
+
+    if (management && MANAGER_ROLE_KEYS.indexOf(management.role) >= 0) {
+      ctx.body = await ctx.service.event.updateById(event.id, ctx.request.body)
+    } else {
+      ctx.status = 302
+      ctx.body = 'Now Access Right'
+    }
   }
 }
 

@@ -21,8 +21,7 @@ describe('Registration Service', () => {
 
       const testRegistration = {
         user: registrationUser.id,
-        event: registrationEvent.id,
-        registCode: 'testRegCode'
+        event: registrationEvent.id
       }
 
       const registration = await ctx.service.registration.create(testRegistration)
@@ -30,7 +29,7 @@ describe('Registration Service', () => {
       assert(createdRegistration)
       assert.equal(createdRegistration.user, registrationUser.id)
       assert.equal(createdRegistration.event, registrationEvent.id)
-      assert.equal(createdRegistration.registCode, 'testRegCode')
+      assert(createdRegistration.registCode)
     })
   })
 
@@ -66,7 +65,7 @@ describe('Registration Service', () => {
     it('should find resgister by registCode', async () => {
       const ctx = app.mockContext()
 
-      const registration = await ctx.service.registration.findRegistrationByCode('testRegCode')
+      const registration = await ctx.service.registration.findRegistrationByCode(createdRegistration.registCode)
 
       assert(registration)
 

@@ -42,6 +42,12 @@ module.exports = app => {
     }
 
     async updateById (id, info) {
+      if (info.password) {
+        // Encrypt password
+        info.hashedPassword = await bcrypt.hash(info.password, app.config.auth.saltRounds)
+        delete info.password
+      }
+
       let data = await this.ctx.model.User.findOneAndUpdate({_id: id},
         {$set: info}, {new: true})
       return data

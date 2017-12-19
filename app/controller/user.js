@@ -18,7 +18,7 @@ class UserController extends Controller {
 
   async updateAuthUser (ctx) {
     const { user: currentUser } = ctx
-    ctx.body = await ctx.service.user.update(currentUser.id, ctx.request.body)
+    ctx.body = await ctx.service.user.updateById(currentUser.id, ctx.request.body)
   }
 
   async getByUsername (ctx) {

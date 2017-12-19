@@ -1,5 +1,9 @@
 'use strict'
 
+const generateUID = require('nanoid/generate')
+const Hashids = require('hashids')
+const hashids = new Hashids('', 0, '23456789ABCDEFGHJKMNOPQRSTUVWXYZ')
+
 module.exports = app => {
   class RegistrationService extends app.Service {
     async findRegistedEventsByFilter (filter) {
@@ -25,7 +29,10 @@ module.exports = app => {
 
     async create (registration) {
       if (!registration) { return }
-      let data = await this.ctx.model.Registration.create(registration)
+      const data = new this.ctx.model.Registration(registration)
+      data.registCode = hashids.encode(generateUID('1234567890', 7))
+
+      await data.save()
       return data
     }
 

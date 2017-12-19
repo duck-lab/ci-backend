@@ -1,5 +1,7 @@
 'use strict'
 
+const { MANAGEMENT_ROLE } = require('../public/enum')
+
 module.exports = app => {
   class OrganizationService extends app.Service {
     async findByFilter (filter) {
@@ -20,10 +22,18 @@ module.exports = app => {
       return data
     }
 
-    async create (registration) {
-      if (!registration) { return }
-      let data = await this.ctx.model.Organization.create(registration)
-      return data
+    async createWithUserId (info, uid) {
+      if (!info || !uid) { return }
+      const user = await this.ctx.model.User.findById(uid)
+      if (!user) return
+      let organization = await this.ctx.model.Organization.create(info)
+
+      await this.ctx.service.management.create({
+        user: user.id,
+        organization: organization.id,
+        role: MANAGEMENT_ROLE.OWNER
+      })
+      return organization
     }
 
     async updateById (id, info) {

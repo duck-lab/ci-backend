@@ -1,12 +1,14 @@
 'use strict'
 
 const { app, assert } = require('egg-mock/bootstrap')
-const { flashDB } = require('../../fixtures/db')
+const { flashDB, fixData } = require('../../fixtures/db')
+const eventSource = require('../../fixtures/data/service_organization')
 
 describe('Organization Service', () => {
   let createdOrganization = null
 
-  before(() => flashDB(app.mongoose, 'checkIn_test'))
+  before(() => flashDB(app.mongoose, 'checkIn_test')
+  .then(() => fixData(app.mongoose, eventSource)))
 
   describe('Create', () => {
     const testOrganization = {
@@ -19,16 +21,25 @@ describe('Organization Service', () => {
     }
     it('should create organization', async () => {
       const ctx = app.mockContext()
+      const user = await ctx.service.user.findByName('ole3021')
 
-      const organization = await ctx.service.organization.create(testOrganization)
+      const organization = await ctx.service.organization.createWithUserId(testOrganization, user.id)
+      const management = await ctx.service.management.findOneByFilter({
+        user: user.id,
+        organization: organization.id
+      })
       createdOrganization = organization
       assert(organization)
+      assert(management)
       assert.equal(organization.name, 'organizationName')
       assert.equal(organization.logo, 'http://logo.com/logo')
       assert.equal(organization.contact, '+86 201 1234567')
       assert.equal(organization.email, 'ole3021@gmail.com')
       assert.equal(organization.address, '上海市静安区')
       assert.equal(organization.site, 'http://ole3021.me')
+      assert.equal(management.user, user.id)
+      assert.equal(management.organization, organization.id)
+      assert.equal(management.role, 'OWNER')
     })
   })
 

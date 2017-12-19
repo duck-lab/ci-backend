@@ -21,6 +21,7 @@ module.exports = ({ mongoose }) => {
     redirect: { type: String },
     subEvents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }],
     isAutoCheckIn: { type: Boolean, default: false },
+    isSelfRegistry: { type: Boolean, default: false },
     __v: { type: Number, select: false }
   })
 

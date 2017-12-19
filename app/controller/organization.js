@@ -1,6 +1,9 @@
 'use strict'
 
 const Controller = require('egg').Controller
+const { MANAGEMENT_ROLE } = require('../public/enum')
+
+const MANAGER_ROLE_KEYS = Object.keys(MANAGEMENT_ROLE)
 
 class OrganizationController extends Controller {
   async getAllOrganizations (ctx) {
@@ -8,7 +11,9 @@ class OrganizationController extends Controller {
   }
 
   async createOrganization (ctx) {
-    ctx.body = await ctx.service.organization.create(ctx.request.body)
+    const { user: currentUser } = ctx
+
+    ctx.body = await ctx.service.organization.createWithUserId(ctx.request.body, currentUser.id)
   }
 
   async getAuthUserOrganizations (ctx) {
@@ -26,11 +31,20 @@ class OrganizationController extends Controller {
   }
 
   async updateOrganization (ctx) {
-    // const { user: currentUser } = ctx
-    const orgnaizer = ctx.service.organization.findByName({name: ctx.params.org})
-    // const management = ctx.service.organization.findByfilter({user: currentUser.id, org: orgnaizer.id})
-    // check management role
-    ctx.body = await ctx.service.User.update(orgnaizer.id, ctx.request.body)
+    const { user: currentUser } = ctx
+    const organization = ctx.service.organization.findByName({name: ctx.params.org})
+
+    const management = await ctx.service.management.findOneByFilter({
+      user: currentUser.id,
+      organization: organization.id
+    })
+
+    if (management && MANAGER_ROLE_KEYS.indexOf(management.role) >= 0) {
+      ctx.body = await ctx.service.organization.updateById(organization.id, ctx.request.body)
+    } else {
+      ctx.status = 302
+      ctx.body = 'Now Access Right'
+    }
   }
 }
 
