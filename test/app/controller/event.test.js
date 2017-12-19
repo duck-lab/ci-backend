@@ -97,10 +97,10 @@ describe('Event Controller', () => {
       .expect(200)
       .then(({ body }) => {
         assert.equal(body.meta.total, 2)
-        assert(body.data[0].event.title)
-        assert(body.data[0].registCode)
-        assert(body.data[1].event.title)
-        assert(body.data[1].registCode)
+        assert(body.data[0].event.title, 'WiredcraftEvent')
+        assert(body.data[0].registCode, 'X4dw6XSa')
+        assert(body.data[1].event.title, 'DucklabEvnet')
+        assert(body.data[1].registCode, 'Er4X2dfG')
       })
   })
 
@@ -110,7 +110,11 @@ describe('Event Controller', () => {
       .set('Authorization', 'Bearer testToken')
       .expect(200)
       .then(({ body }) => {
-        console.log('>>> bod', body)
+        assert.equal(body.meta.total, 2)
+        assert(body.data[0].event.title, 'WiredcraftEvent')
+        assert(body.data[0].registCode, 'X4dw6XSa')
+        assert(body.data[1].event.title, 'DucklabEvnet')
+        assert(body.data[1].registCode, 'Er4X2dfG')
       })
   })
 })
