@@ -8,7 +8,9 @@ class EventController extends Controller {
   }
 
   async createEvent (ctx) {
-    ctx.body = await ctx.service.event.create(ctx.request.body)
+    const { user: currentUser } = ctx
+
+    ctx.body = await ctx.service.event.createWithUserId(ctx.request.body, currentUser.id)
   }
 
   async getAuthUserEvents (ctx) {
@@ -34,7 +36,9 @@ class EventController extends Controller {
   }
 
   async updateAnEvent (ctx) {
-    // TODO: check management
+    // const { user: currentUser } = ctx
+    // TODO: add logic
+
     const event = await ctx.service.event.findByName(ctx.params.event)
     ctx.body = await ctx.service.event.updateById(event.id, ctx.request.body)
   }

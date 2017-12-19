@@ -1,5 +1,7 @@
 'use strict'
 
+const { MANAGEMENT_ROLE } = require('../public/enum')
+
 module.exports = app => {
   class EventService extends app.Service {
     async findByFilter (filter) {
@@ -20,10 +22,18 @@ module.exports = app => {
       return data
     }
 
-    async create (info) {
-      if (!info) { return }
-      let data = await this.ctx.model.Event.create(info)
-      return data
+    async createWithUserId (info, uid) {
+      if (!info || !uid) { return }
+      const user = await this.ctx.model.User.findById(uid)
+      if (!user) return
+
+      const event = await this.ctx.model.Event.create(info)
+      await this.ctx.service.management.create({
+        user: user.id,
+        event: event.id,
+        role: MANAGEMENT_ROLE.OWNER
+      })
+      return event
     }
 
     async updateById (id, info) {

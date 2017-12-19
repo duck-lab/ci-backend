@@ -1,12 +1,14 @@
 'use strict'
 
 const { app, assert } = require('egg-mock/bootstrap')
-const { flashDB } = require('../../fixtures/db')
+const { flashDB, fixData } = require('../../fixtures/db')
+const eventSource = require('../../fixtures/data/service_event')
 
 describe('Event Service', () => {
   let createdEvent = null
 
-  before(() => flashDB(app.mongoose, 'checkIn_test'))
+  before(() => flashDB(app.mongoose, 'checkIn_test')
+    .then(() => fixData(app.mongoose, eventSource)))
 
   describe('Create', () => {
     const testEvent = {
@@ -24,15 +26,24 @@ describe('Event Service', () => {
     }
     it('should create event', async () => {
       const ctx = app.mockContext()
+      const user = await ctx.service.user.findByName('ole3021')
 
-      const event = await ctx.service.event.create(testEvent)
+      const event = await ctx.service.event.createWithUserId(testEvent, user.id)
+      const management = await ctx.service.management.findOneByFilter({
+        user: user.id,
+        event: event.id
+      })
       createdEvent = event
       assert(event)
+      assert(management)
       assert.equal(event.postImage, 'testImage')
       assert.equal(event.country, 'China')
       assert.equal(event.province, '上海')
       assert.equal(event.city, '上海')
       assert.equal(event.address, '静安区')
+      assert.equal(management.user, user.id)
+      assert.equal(management.event, event.id)
+      assert.equal(management.role, 'OWNER')
     })
   })
 

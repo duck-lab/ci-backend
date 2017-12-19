@@ -26,11 +26,11 @@ module.exports = app => {
 
   // Event route
   router.get('/events', controller.event.getAllEvents) // 查看和搜索活动
-  router.post('/events', controller.event.createEvent) // 创建活动 >> 认证用户
+  router.post('/events', app.oAuth2Server.authenticate(), controller.event.createEvent) // 创建活动
   router.get('/user/events', app.oAuth2Server.authenticate(), controller.event.getAuthUserEvents) // 获取当前登陆用户的活动
   router.get('/users/:username/events', controller.event.getUserEvents) // 获取指定用户的活动
   router.get('/events/:event', controller.event.getEvent) // 获取活动通过活动名称
-  router.patch('/events/:event', controller.event.updateAnEvent) // 更新活动通过活动名称 >> 认证用户
+  router.patch('/events/:event', app.oAuth2Server.authenticate(), controller.event.updateAnEvent) // 更新活动通过活动名称
 
   // Registrations route
   router.get('/events/:event/registrations', controller.registration.getEventRegistrations) // 获取活动注册用户
