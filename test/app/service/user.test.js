@@ -117,11 +117,15 @@ describe('User Service', () => {
       const ctx = app.mockContext()
 
       const user = await ctx.service.user.updateById(createdUser.id, {
+        password: 'newPassword',
         realName: 'updatedName',
         mobile: 'updateMobile'
       })
 
+      const isVerified = await ctx.service.user.verifyUser('ole3021', 'newPassword')
+
       assert(user)
+      assert.equal(isVerified.username, 'ole3021')
       assert.equal(user.mobile, 'updateMobile')
       assert.equal(user.email, 'ole3021@gmail.com')
       assert.equal(user.username, 'ole3021')
