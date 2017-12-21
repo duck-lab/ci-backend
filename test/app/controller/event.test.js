@@ -48,11 +48,7 @@ describe('Event Controller', () => {
         })
     })
 
-    it('should get a use events list ', () => {
-      // TOFIX: Use mock to fack ctx user(请求的第二个app对象有问题，中间件ctx写入会导致测试失败 @eggjs)
-      app.mockContext({
-        user: injectData.User[0]
-      })
+    it('should get a user events list ', () => {
       return app.httpRequest()
         .get('/users/ole3021/events')
         .expect(200)
@@ -65,7 +61,11 @@ describe('Event Controller', () => {
         })
     })
 
-    it('should get authed user events list', () => {
+    it('should get currently authed user events list', () => {
+      // TOFIX: Use mock to fack ctx user(请求的第二个app对象有问题，中间件ctx写入会导致测试失败 @eggjs)
+      app.mockContext({
+        user: injectData.User[0]
+      })
       return app.httpRequest()
         .get('/user/events')
         .set('Authorization', 'Bearer testToken')
@@ -76,6 +76,17 @@ describe('Event Controller', () => {
           assert(body.data[0].registCode)
           assert.equal(body.data[1].event.title, 'DucklabEvnet')
           assert(body.data[1].registCode)
+        })
+    })
+
+    it('should get event by name', () => {
+      return app.httpRequest()
+        .get('/events/WiredcraftEvent')
+        .expect(200)
+        .then(({ body }) => {
+          assert.equal(body.title, 'WiredcraftEvent')
+          assert.equal(body.isAutoCheckIn, false)
+          assert.equal(body.city, '上海')
         })
     })
   })

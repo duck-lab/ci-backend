@@ -50,8 +50,9 @@ class EventController extends Controller {
     if (management && MANAGER_ROLE_KEYS.indexOf(management.role) >= 0) {
       ctx.body = await ctx.service.event.updateById(event.id, ctx.request.body)
     } else {
-      ctx.status = 302
-      ctx.body = 'Now Access Right'
+      // TODO: return error
+      // ctx.status = 302
+      // ctx.body = 'Now Access Right'
     }
   }
 }
