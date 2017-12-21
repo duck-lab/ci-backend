@@ -7,6 +7,14 @@ module.exports = app => {
       return data
     }
 
+    async findManagedOrgsByUserId (uid) {
+      let data = await this.ctx.model.Management.find({user: uid}).sort('field -createdAt').populate('organization')
+      let result = {}
+      result.meta = {total: data.length}
+      result.data = data
+      return result
+    }
+
     async create (registration) {
       if (!registration) { return }
       // TODO: exist event or Organization only

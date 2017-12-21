@@ -1,0 +1,67 @@
+{
+  "User": [
+    {
+      "hashedPassword": "hashedPassword",
+      "mobile": "+86 18303033030",
+      "email": "ole3021@gmail.com",
+      "username": "ole3021",
+      "realName": "Oliver.W",
+      "country": "China",
+      "province": "上海",
+      "city": "上海",
+      "address": "静安区"
+    }
+  ],
+  "Organization": [
+      {
+        "name": "Ducklab",
+        "logo": "https://avatars0.githubusercontent.com/u/32359532?s=70&v=4",
+        "contact": "18330033302",
+        "email": "ole3021@ducklab.com",
+        "address": "上海市静安区",
+        "site": "http://ducklab.tech"
+      },
+      {
+        "name": "Wiredcraft",
+        "logo": "https://avatars2.githubusercontent.com/u/496772?s=70&v=4",
+        "contact": "18330033301",
+        "email": "ole3021@wiredcraft.com",
+        "address": "上海市静安区",
+        "site": "http://wiredcraft.com"
+      },
+      {
+        "name": "JSConf",
+        "contact": "18330033300",
+        "email": "ole3021@gmail.com",
+        "address": "上海市静安区",
+        "site": "http://jsconf.cn/"
+      }
+    ],
+  "Management": [
+  {
+      "user": "#User#username#ole3021",
+      "organization": "#Organization#name#Ducklab",
+      "role": "ADMIN"
+  },
+  {
+      "user": "#User#username#ole3021",
+      "organization": "#Organization#name#Wiredcraft",
+      "role": "ADMIN"
+  }
+  ],
+  "AccessToken": [
+    {
+      "accessToken": "testToken",
+      "accessTokenExpiresAt": "2317-12-17 08:26:35.647Z",
+      "refreshToken": "refreshToken",
+      "refreshTokenExpiresAt": "2317-12-17 08:26:35.647Z",
+      "user": {
+        "userId": "#User#username#ole3021"
+      },
+      "client": {
+        "grants": ["password"],
+        "clientId": "test"
+      }
+    }
+  ]
+}

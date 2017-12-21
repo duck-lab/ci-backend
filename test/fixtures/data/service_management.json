@@ -59,7 +59,7 @@
       "name": "Ducklab",
       "logo": "https://avatars0.githubusercontent.com/u/32359532?s=70&v=4",
       "contact": "18330033300",
-      "emali": "ole3021@gmail.com",
+      "email": "ole3021@ducklab.com",
       "address": "上海市静安区",
       "site": "http://ducklab.tech"
     },
@@ -67,14 +67,14 @@
       "name": "Wiredcraft",
       "logo": "https://avatars2.githubusercontent.com/u/496772?s=70&v=4",
       "contact": "18330033300",
-      "emali": "ole3021@gmail.com",
+      "email": "ole3021@wiredcraft.com",
       "address": "上海市静安区",
       "site": "http://wiredcraft.com"
     },
     {
       "name": "JSConf",
       "contact": "18330033300",
-      "emali": "ole3021@gmail.com",
+      "email": "ole3021@gmail.com",
       "address": "上海市静安区",
       "site": "http://jsconf.cn/"
     }

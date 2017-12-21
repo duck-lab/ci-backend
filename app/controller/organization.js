@@ -18,13 +18,13 @@ class OrganizationController extends Controller {
 
   async getAuthUserOrganizations (ctx) {
     const { user: currentUser } = ctx
-    ctx.body = await ctx.service.management.findManagedOrgs(currentUser.id)
+    ctx.body = await ctx.service.management.findManagedOrgsByUserId(currentUser.id)
   }
 
-  async getUserOrganizations (ctx) {
-    const user = await ctx.service.user.findByName(ctx.params.name)
-    ctx.body = await ctx.service.registration.findManagedOrgs(user.id)
-  }
+  // async getUserOrganizations (ctx) {
+  //   const user = await ctx.service.user.findByName(ctx.params.user)
+  //   ctx.body = await ctx.service.registration.findManagedOrgs(user.id)
+  // }
 
   async getOrganization (ctx) {
     ctx.body = await ctx.service.organization.findByName(ctx.params.org)
@@ -32,7 +32,7 @@ class OrganizationController extends Controller {
 
   async updateOrganization (ctx) {
     const { user: currentUser } = ctx
-    const organization = ctx.service.organization.findByName({name: ctx.params.org})
+    const organization = await ctx.service.organization.findByName(ctx.params.org)
 
     const management = await ctx.service.management.findOneByFilter({
       user: currentUser.id,
@@ -42,8 +42,9 @@ class OrganizationController extends Controller {
     if (management && MANAGER_ROLE_KEYS.indexOf(management.role) >= 0) {
       ctx.body = await ctx.service.organization.updateById(organization.id, ctx.request.body)
     } else {
-      ctx.status = 302
-      ctx.body = 'Now Access Right'
+      // TODO: return error
+      // ctx.status = 302
+      // ctx.body = 'Now Access Right'
     }
   }
 }

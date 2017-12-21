@@ -5,7 +5,7 @@ const { MANAGEMENT_ROLE } = require('../public/enum')
 module.exports = app => {
   class OrganizationService extends app.Service {
     async findByFilter (filter) {
-      let data = await this.ctx.model.Organization.find(filter)
+      let data = await this.ctx.model.Organization.find(filter).sort('field -createdAt')
       let result = {}
       result.meta = {total: data.length}
       result.data = data

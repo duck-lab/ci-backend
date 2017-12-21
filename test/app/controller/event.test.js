@@ -31,7 +31,7 @@ describe('Event Controller', () => {
         })
     })
 
-    it('should get event', () => {
+    it('should search event', () => {
       return app.httpRequest()
         .get('/events')
         .query({

@@ -51,7 +51,7 @@ module.exports = app => {
   router.get('/orgs', controller.organization.getAllOrganizations) // 查看和搜索所有组织
   router.post('/orgs', app.oAuth2Server.authenticate(), controller.organization.createOrganization) // 创建组织
   router.get('/user/orgs', app.oAuth2Server.authenticate(), controller.organization.getAuthUserOrganizations) // 获取当前登陆用户的组织
-  router.get('/users/:user/orgs', controller.organization.getUserOrganizations) // 获取指定用户的组织
+  // router.get('/users/:user/orgs', controller.organization.getUserOrganizations) // 获取指定用户的组织
   router.get('/orgs/:org', controller.organization.getOrganization) // 获取组织通过组织名称
   router.patch('/orgs/:org', app.oAuth2Server.authenticate(), controller.organization.updateOrganization) // 更新组织通过活动名称
 
