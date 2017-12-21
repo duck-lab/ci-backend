@@ -12,7 +12,7 @@
     "egg-scripts": "^2.5.0",
     "hashids": "^1.1.4",
     "joi": "^13.0.2",
-    "moh-mongo-injector": "^1.1.1",
+    "moh-mongo-injector": "^1.1.2",
     "mongoose-timestamp": "^0.6.0",
     "nanoid": "^1.0.1"
   },
