@@ -50,6 +50,7 @@ describe('Event Controller', () => {
 
     it('should get a use events list ', () => {
       // TOFIX: Use mock to fack ctx user(请求的第二个app对象有问题，中间件ctx写入会导致测试失败 @eggjs)
+      app.mockContext({
         user: injectData.User[0]
       })
       return app.httpRequest()
