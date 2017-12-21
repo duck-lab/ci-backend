@@ -13,7 +13,7 @@ class UserController extends Controller {
 
   async getAuthUser (ctx) {
     const { user: currentUser } = ctx
-    ctx.body = await ctx.service.user.findById(currentUser.userId)
+    ctx.body = await ctx.service.user.findById(currentUser.id)
   }
 
   async updateAuthUser (ctx) {
@@ -22,7 +22,7 @@ class UserController extends Controller {
   }
 
   async getByUsername (ctx) {
-    ctx.body = await ctx.service.user.findByName(ctx.params.nick_name)
+    ctx.body = await ctx.service.user.findByName(ctx.params.username)
   }
 }
 

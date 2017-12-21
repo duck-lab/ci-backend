@@ -116,9 +116,9 @@ describe('Event Controller', () => {
         .send(testEvent)
         .expect(200)
         .then(({ body }) => {
-          assert.equal(body.title, testEvent.title)
-          assert.equal(body.postImage, testEvent.postImage)
-          assert.equal(body.country, testEvent.country)
+          assert.equal(body.title, 'Travel Event')
+          assert.equal(body.postImage, 'None')
+          assert.equal(body.country, 'China')
           assert.equal(body.isAutoCheckIn, false)
           assert.equal(body.isRegistedOnly, false)
           createdEvent = body
