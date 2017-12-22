@@ -73,8 +73,8 @@ class ManagementController extends Controller {
         event: event.id
       })
     } else {
-      ctx.status = 302
-      ctx.body = 'Faile to create management'
+      // ctx.status = 302
+      // ctx.body = 'Faile to create management'
     }
   }
 
