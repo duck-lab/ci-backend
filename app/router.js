@@ -36,12 +36,11 @@ module.exports = app => {
   // Registrations route
   router.get('/events/:event/registrations', controller.registration.getEventRegistrations) // 获取活动注册用户
   router.post('/events/:event/registration', app.oAuth2Server.authenticate(), controller.registration.createAuthUserRegistration) // 注册活动当前登陆用户
-  router.get('/user/events', app.oAuth2Server.authenticate(), controller.event.getAuthUserEvents) // 获取当前登陆用户的活动
   router.post('/events/:event/registration/:user', app.oAuth2Server.authenticate(), controller.registration.createRegistration) // 注册活动用户(管理员)
   router.put('/events/:event/checkin', app.oAuth2Server.authenticate(), controller.registration.checkInAuthUserRegistration) // 签到活动当前登陆用户
   router.put('/events/:event/checkin/:user', app.oAuth2Server.authenticate(), controller.registration.checkInRegistration) // 签到活动用户(管理员)
-  router.put('/events/:event/cancel', app.oAuth2Server.authenticate(), controller.registration.cancelAuthUserRegistration) // 取消签到活动当前登陆用户
-  router.put('/events/:event/cancel/:user', app.oAuth2Server.authenticate(), controller.registration.cancelRegistration) // 取消签到活动用户(管理员)
+  router.delete('/events/:event/checkin', app.oAuth2Server.authenticate(), controller.registration.cancelAuthUserRegistration) // 取消签到活动当前登陆用户
+  router.delete('/events/:event/checkin/:user', app.oAuth2Server.authenticate(), controller.registration.cancelRegistration) // 取消签到活动用户(管理员)
   router.delete('/events/:event/registrations/:user', app.oAuth2Server.authenticate(), controller.registration.removeRegistration) // 删除活动注册用户(管理员)
   // TODO：Quick registration
   // router.post('/events/:event/registration-by-mobile', controller.registration.createRegistrationByMobile)

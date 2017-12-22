@@ -6,6 +6,11 @@ const hashids = new Hashids('', 0, '23456789ABCDEFGHJKMNOPQRSTUVWXYZ')
 
 module.exports = app => {
   class RegistrationService extends app.Service {
+    async findRegistrationByFilter (filter) {
+      let data = await this.ctx.model.Registration.findOne(filter).populate(['user', 'event'])
+      return data
+    }
+
     async findRegistedEventsByFilter (filter) {
       let data = await this.ctx.model.Registration.find(filter).sort('field -createdAt').populate('event')
       let result = {}
