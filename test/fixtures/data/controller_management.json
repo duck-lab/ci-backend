@@ -13,14 +13,14 @@
     },
     {
       "hashedPassword": "hashedPassword",
-      "mobile": "+86 18303033033",
-      "email": "ole3021@yahoo.com",
+      "mobile": "+86 18333333333",
+      "email": "oliver@gmail.com",
       "username": "oliver",
-      "realName": "Oliver.Z",
-      "country": "England",
-      "province": "York",
-      "city": "York",
-      "address": "H10"
+      "realName": "Oliver.W",
+      "country": "China",
+      "province": "上海",
+      "city": "上海",
+      "address": "静安区"
     }
   ],
   "Event": [
@@ -31,7 +31,7 @@
       "eventEndAt": "2017-11-22T00:00:00.000Z",
       "checkInStartAt": "2017-11-20T00:00:00.000Z",
       "checkInEndAt": "2017-11-20T10:00:00.000Z",
-      "isAutoCheckIn": true,
+      "isSelfCheckIn": true,
       "country": "China",
       "province": "上海",
       "city": "上海",
@@ -62,14 +62,15 @@
       "province": "黑龙江",
       "city": "哈尔滨",
       "address": "道里区",
-      "checkInType": "QR_CODE_GENERAL"
+      "checkInType": "QR_CODE_GENERAL",
+      "isSelfRegistry": true
     }
   ],
   "Organization": [
     {
       "name": "Ducklab",
       "logo": "https://avatars0.githubusercontent.com/u/32359532?s=70&v=4",
-      "contact": "18330033300",
+      "contact": "18330033302",
       "email": "ole3021@ducklab.com",
       "address": "上海市静安区",
       "site": "http://ducklab.tech"
@@ -77,7 +78,7 @@
     {
       "name": "Wiredcraft",
       "logo": "https://avatars2.githubusercontent.com/u/496772?s=70&v=4",
-      "contact": "18330033300",
+      "contact": "18330033301",
       "email": "ole3021@wiredcraft.com",
       "address": "上海市静安区",
       "site": "http://wiredcraft.com"
@@ -93,18 +94,48 @@
   "Management": [
     {
       "user": "#User#username#ole3021",
-      "event": "#Event#title#WiredcraftEvent",
-      "role": "ADMIN"
+      "event": "#Event#title#DucklabEvnet",
+      "role": "OWNER"
     },
     {
       "user": "#User#username#oliver",
+      "event": "#Event#title#DucklabEvnet",
+      "role": "ADMIN$"
+    },
+    {
+      "user": "#User#username#ole3021",
       "event": "#Event#title#WiredcraftEvent",
-      "role": "ADMIN"
+      "role": "OWNER"
+    },
+    {
+      "user": "#User#username#oliver",
+      "event": "#Event#title#WeedingEvent",
+      "role": "OWNER"
+    },
+    {
+      "user": "#User#username#ole3021",
+      "organization": "#Organization#name#Ducklab",
+      "role": "OWNER"
     },
     {
       "user": "#User#username#ole3021",
       "organization": "#Organization#name#Wiredcraft",
-      "role": "ADMIN"
+      "role": "OWNER"
+    }
+  ],
+  "AccessToken": [
+    {
+      "accessToken": "testToken",
+      "accessTokenExpiresAt": "2317-12-17 08:26:35.647Z",
+      "refreshToken": "refreshToken",
+      "refreshTokenExpiresAt": "2317-12-17 08:26:35.647Z",
+      "user": {
+        "userId": "#User#username#ole3021"
+      },
+      "client": {
+        "grants": ["password"],
+        "clientId": "test"
+      }
     }
   ]
 }

@@ -5,12 +5,14 @@ const { flashDB, fixData } = require('../../fixtures/db')
 const managementSource = require('../../fixtures/data/service_management')
 
 describe('Management Service', () => {
+  let injectData = null
   let managementUser = null
   let managementEvent = null
   let managementOrganization = null
 
   before(() => flashDB(app.mongoose, 'checkIn_test')
-  .then(fixData(app.mongoose, managementSource)))
+    .then(() => fixData(app.mongoose, managementSource))
+    .then((result) => { injectData = result }))
 
   describe('Create', () => {
     it('should create event management', async () => {
@@ -53,7 +55,7 @@ describe('Management Service', () => {
   })
 
   describe('Find', () => {
-    it('should find event management by filter', async () => {
+    it('should find one event management by filter', async () => {
       const ctx = app.mockContext()
 
       const result = await ctx.service.management.findOneByFilter({user: managementUser.id, event: managementEvent.id})
@@ -65,7 +67,7 @@ describe('Management Service', () => {
       assert.equal(result.role, 'ADMIN')
     })
 
-    it('should find Organization management by filter', async () => {
+    it('should find one Organization management by filter', async () => {
       const ctx = app.mockContext()
 
       const result = await ctx.service.management.findOneByFilter({
@@ -78,6 +80,21 @@ describe('Management Service', () => {
       assert.equal(result.user, managementUser.id)
       assert.equal(result.organization, managementOrganization.id)
       assert.equal(result.role, 'ADMIN')
+    })
+
+    it('should find all managers by eventid', async () => {
+      const ctx = app.mockContext()
+      const result = await ctx.service.management.findManagersByEventId(injectData.Event[1].id)
+
+      assert.equal(result.meta.total, 2)
+      assert.equal(result.data[0].user.username, 'oliver')
+      assert.equal(result.data[0].user.realName, 'Oliver.Z')
+      assert.equal(result.data[0].user.country, 'England')
+      assert.equal(result.data[0].user.city, 'York')
+      assert.equal(result.data[1].user.username, 'ole3021')
+      assert.equal(result.data[1].user.realName, 'Oliver.W')
+      assert.equal(result.data[1].user.country, 'China')
+      assert.equal(result.data[1].user.city, '上海')
     })
   })
 

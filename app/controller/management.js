@@ -7,20 +7,19 @@ const MANAGER_ROLE_KEYS = Object.keys(MANAGEMENT_ROLE)
 
 class ManagementController extends Controller {
   async getEventManagements (ctx) {
-    ctx.body = await ctx.service.management.findByFilter({
-      event: ctx.params.event
-    })
+    const event = await ctx.service.event.findByName(ctx.params.event)
+    ctx.body = await ctx.service.management.findManagersByEventId(event.id)
   }
 
   async createEventManagement (ctx) {
     const { user: currentUser } = ctx
 
-    const event = await ctx.service.event.findByFilter({title: ctx.params.event})
+    const event = await ctx.service.event.findByName(ctx.params.event)
     const management = await this.ctx.service.management.findOneByFilter({
       user: currentUser.id,
       event: event.id
     })
-    const targetUser = await ctx.service.user.findByFilter({username: ctx.params.user})
+    const targetUser = await ctx.service.user.findByName(ctx.params.user)
 
     if (targetUser && management && MANAGER_ROLE_KEYS.indexOf(management.role) >= 0) {
       // should in lower ctx.request.body.role
@@ -30,20 +29,20 @@ class ManagementController extends Controller {
         role: ctx.request.body.role
       })
     } else {
-      ctx.status = 302
-      ctx.body = 'Faile to create management'
+      // ctx.status = 302
+      // ctx.body = 'Faile to create management'
     }
   }
 
   async udpateEventManagement (ctx) {
     const { user: currentUser } = ctx
 
-    const event = await ctx.service.event.findByFilter({title: ctx.params.event})
+    const event = await ctx.service.event.findByName(ctx.params.event)
     const management = await this.ctx.service.management.findOneByFilter({
       user: currentUser.id,
       event: event.id
     })
-    const targetUser = await ctx.service.user.findByFilter({username: ctx.params.user})
+    const targetUser = await ctx.service.user.findByName(ctx.params.user)
 
     if (targetUser && management && MANAGER_ROLE_KEYS.indexOf(management.role) >= 0) {
       // should in lower ctx.request.body.role
@@ -52,8 +51,8 @@ class ManagementController extends Controller {
         event: event.id
       }, ctx.request.body)
     } else {
-      ctx.status = 302
-      ctx.body = 'Faile to create management'
+      // ctx.status = 302
+      // ctx.body = 'Faile to create management'
     }
   }
 
@@ -82,12 +81,12 @@ class ManagementController extends Controller {
   async createOrgManagement (ctx) {
     const { user: currentUser } = ctx
 
-    const organization = await ctx.service.organization.findByFilter({name: ctx.params.org})
+    const organization = await ctx.service.organization.findByName(ctx.params.org)
     const management = await this.ctx.service.management.findOneByFilter({
       user: currentUser.id,
       organization: organization.id
     })
-    const targetUser = await ctx.service.user.findByFilter({username: ctx.params.user})
+    const targetUser = await ctx.service.user.findByName(ctx.params.user)
 
     if (targetUser && management && MANAGER_ROLE_KEYS.indexOf(management.role) >= 0) {
       // should in lower ctx.request.body.role
@@ -97,20 +96,20 @@ class ManagementController extends Controller {
         role: ctx.request.body.role
       })
     } else {
-      ctx.status = 302
-      ctx.body = 'Faile to create management'
+      // ctx.status = 302
+      // ctx.body = 'Faile to create management'
     }
   }
 
   async udpateOrgManagement (ctx) {
     const { user: currentUser } = ctx
 
-    const organization = await ctx.service.organization.findByFilter({name: ctx.params.org})
+    const organization = await ctx.service.organization.findByName(ctx.params.org)
     const management = await this.ctx.service.management.findOneByFilter({
       user: currentUser.id,
       organization: organization.id
     })
-    const targetUser = await ctx.service.user.findByFilter({username: ctx.params.user})
+    const targetUser = await ctx.service.user.findByName(ctx.params.user)
 
     if (targetUser && management && MANAGER_ROLE_KEYS.indexOf(management.role) >= 0) {
       // should in lower ctx.request.body.role
@@ -119,8 +118,8 @@ class ManagementController extends Controller {
         organization: organization.id
       }, ctx.request.body)
     } else {
-      ctx.status = 302
-      ctx.body = 'Faile to update management'
+      // ctx.status = 302
+      // ctx.body = 'Faile to update management'
     }
   }
 
@@ -141,8 +140,8 @@ class ManagementController extends Controller {
         organization: organization.id
       })
     } else {
-      ctx.status = 302
-      ctx.body = 'Faile to create management'
+      // ctx.status = 302
+      // ctx.body = 'Faile to create management'
     }
   }
 }
