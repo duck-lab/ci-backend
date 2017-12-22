@@ -12,8 +12,24 @@ module.exports = appInfo => {
     url: 'mongodb://127.0.0.1/checkIn_dev',
     options: {}
   }
+
   // add your config here
   config.middleware = []
+
+  config.auth = {
+    saltRounds: 10
+  }
+
+  config.oAuth2Server = {
+    debug: true,
+    grants: ['password']
+  }
+
+  config.security = {
+    csrf: {
+      enable: false
+    }
+  }
 
   return config
 }

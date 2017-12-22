@@ -1,19 +1,17 @@
 'use strict'
 
 const { app, assert } = require('egg-mock/bootstrap')
+const { flashDB, fixData } = require('../../fixtures/db')
+const eventSource = require('../../fixtures/data/service_event')
 
 describe('Event Service', () => {
   let createdEvent = null
 
-  before(() => app.ready())
-  after(() => {
-    const ctx = app.mockContext()
-
-    ctx.model.Event.collection.drop()
-  })
+  before(() => flashDB(app.mongoose, 'checkIn_test')
+    .then(() => fixData(app.mongoose, eventSource)))
 
   describe('Create', () => {
-    const testEvent1 = {
+    const testEvent = {
       title: 'testEvent',
       postImage: 'testImage',
       eventStartAt: new Date('2017-11-20'),
@@ -28,9 +26,34 @@ describe('Event Service', () => {
     }
     it('should create event', async () => {
       const ctx = app.mockContext()
+      const user = await ctx.service.user.findByName('ole3021')
 
-      const event = await ctx.service.event.create(testEvent1)
+      const event = await ctx.service.event.createWithUserId(testEvent, user.id)
+      const management = await ctx.service.management.findOneByFilter({
+        user: user.id,
+        event: event.id
+      })
       createdEvent = event
+      assert(event)
+      assert(management)
+      assert.equal(event.postImage, 'testImage')
+      assert.equal(event.country, 'China')
+      assert.equal(event.province, '上海')
+      assert.equal(event.city, '上海')
+      assert.equal(event.address, '静安区')
+      assert.equal(management.user, user.id)
+      assert.equal(management.event, event.id)
+      assert.equal(management.role, 'OWNER')
+    })
+  })
+
+  describe('Find', () => {
+    it('should find event by filter', async () => {
+      const ctx = app.mockContext()
+
+      const result = await ctx.service.event.findByFilter({title: 'testEvent'})
+      const event = result.data[0]
+
       assert(event)
       assert.equal(event.postImage, 'testImage')
       assert.equal(event.country, 'China')
@@ -38,27 +61,21 @@ describe('Event Service', () => {
       assert.equal(event.city, '上海')
       assert.equal(event.address, '静安区')
     })
-  })
 
-  describe('Find', () => {
-    it('should get event by title', async () => {
+    it('should fine event by title', async () => {
       const ctx = app.mockContext()
 
-      const result = await ctx.service.event.find({title: 'testEvent'})
-      const eventInfo = result.data[0]
+      const event = await ctx.service.event.findByName('testEvent')
 
-      assert(result)
-      assert(eventInfo)
-      assert.equal(result.meta.total, 1)
-
-      assert.equal(eventInfo.postImage, 'testImage')
-      assert.equal(eventInfo.country, 'China')
-      assert.equal(eventInfo.province, '上海')
-      assert.equal(eventInfo.city, '上海')
-      assert.equal(eventInfo.address, '静安区')
+      assert(event)
+      assert.equal(event.postImage, 'testImage')
+      assert.equal(event.country, 'China')
+      assert.equal(event.province, '上海')
+      assert.equal(event.city, '上海')
+      assert.equal(event.address, '静安区')
     })
 
-    it('should get event with eventId', async () => {
+    it('should get event by eventId', async () => {
       const ctx = app.mockContext()
 
       const event = await ctx.service.event.findById(createdEvent.id)
@@ -72,10 +89,10 @@ describe('Event Service', () => {
   })
 
   describe('Update', () => {
-    it('should update event several fileds with id', async () => {
+    it('should update event several fileds by eventId', async () => {
       const ctx = app.mockContext()
 
-      const event = await ctx.service.event.update(createdEvent.id, {
+      const event = await ctx.service.event.updateById(createdEvent.id, {
         title: 'udpatedTitle',
         postImage: 'updatedImage'
       })
@@ -86,17 +103,6 @@ describe('Event Service', () => {
       assert.equal(event.province, '上海')
       assert.equal(event.city, '上海')
       assert.equal(event.address, '静安区')
-    })
-  })
-
-  describe('Delete', () => {
-    it('should delete events in the list of uids', async () => {
-      const ctx = app.mockContext()
-
-      const result = await ctx.service.event.destroy([createdEvent.id])
-
-      assert(result)
-      assert.equal(result.n, result.ok)
     })
   })
 })

@@ -1,5 +1,7 @@
 'use strict'
 
+const timestamps = require('mongoose-timestamp')
+
 module.exports = ({ mongoose }) => {
   const EventSchema = new mongoose.Schema({
     title: { type: String, required: true, trim: true, index: true },
@@ -12,14 +14,19 @@ module.exports = ({ mongoose }) => {
     province: { type: String },
     city: { type: String },
     address: { type: String, trim: true },
-    organizers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Organizer' }],
+    organizations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Organization' }],
     limitCheckInAmount: { type: Number },
-    isRegisteredOnly: { type: Boolean, default: false },
+    isRegistedOnly: { type: Boolean, default: false },
     checkInType: { type: String, required: true },
     redirect: { type: String },
     subEvents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }],
-    isAutoCheckIn: { type: Boolean, default: false }
+    isAutoCheckIn: { type: Boolean, default: false },
+    isSelfCheckIn: { type: Boolean, default: false },
+    isSelfRegistry: { type: Boolean, default: false },
+    __v: { type: Number, select: false }
   })
+
+  EventSchema.plugin(timestamps)
 
   return mongoose.model('Event', EventSchema)
 }

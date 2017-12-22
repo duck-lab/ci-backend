@@ -1,0 +1,5 @@
+exports.MANAGEMENT_ROLE = {
+  OWNER: 'OWNER',
+  ADMIN: 'ADMIN',
+  MEMBER: 'MEMBER'
+}
