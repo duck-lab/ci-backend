@@ -21,7 +21,7 @@ class UserController extends Controller {
     ctx.body = await ctx.service.user.updateById(currentUser.id, ctx.request.body)
   }
 
-  async getByUsername (ctx) {
+  async getUserByUsername (ctx) {
     ctx.body = await ctx.service.user.findByName(ctx.params.username)
   }
 }
