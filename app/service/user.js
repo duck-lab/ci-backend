@@ -23,6 +23,12 @@ module.exports = app => {
       return data
     }
 
+    // TODO: ADD COV TEST
+    async findByOpenId (openId) {
+      let data = await this.ctx.model.User.findOne({ wechatOpenId: openId })
+      return data
+    }
+
     async verifyUser (username, password) {
       const user = await this.ctx.model.User.findOne({ $or: [
         { email: username },
