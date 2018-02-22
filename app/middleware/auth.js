@@ -6,12 +6,12 @@ module.exports = () => {
 
     if (!accessToken) throw new Error('Rquired authed user access only!')
 
-    // const token = await ctx.service.accessToken.findByToken(accessToken)
+    const token = await ctx.service.accessToken.findByToken(accessToken)
 
-    // if (!token) throw new Error('Invalid AccessToken')
+    if (!token || token.accessTokenExpiresAt < new Date()) throw new Error('Invalid AccessToken')
 
-    ctx.user = { user: 'asdf' } //accessToken.user
-    ctx.role = { role: 'role' } //accessToken.role
+    ctx.user = token.user
+    ctx.info = token.info
 
     await next()
   }
