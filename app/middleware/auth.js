@@ -2,7 +2,9 @@
 
 module.exports = () => {
   return async function (ctx, next) {
-    const { authorization: accessToken } = ctx.headers
+    let { authorization: accessToken } = ctx.headers
+
+    accessToken = accessToken.replace('Bearer ', '')
 
     if (!accessToken) throw new Error('Rquired authed user access only!')
 
