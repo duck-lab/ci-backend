@@ -19,7 +19,7 @@ module.exports = app => {
   router.post('/users', controller.user.createUser) // 注册用户
   router.get('/user', autyByToken, controller.user.getAuthUser) // 获取当前登陆用户信息
   router.patch('/user', autyByToken, controller.user.updateAuthUser) // 更新当前登陆用户信息
-  router.get('/users/:username', controller.user.getByUsername) // 获取指定用户信息
+  router.get('/users/:username', controller.user.getUserByUsername) // 获取指定用户信息
   // TODO: Verify user by Email / Mobile
   // TODO: Banne User route
   // TODO: Reset Password
