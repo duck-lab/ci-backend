@@ -47,6 +47,18 @@ describe('AccessToken Service', () => {
     })
   })
 
+  describe('Find by refreshToken', () => {
+    it('should find accessToken by refreshToken', async () => {
+      const ctx = app.mockContext()
+
+      const accessToken = await ctx.service.accessToken.findByRefreshToken(createdAccessToken.refreshToken)
+      assert(accessToken)
+      assert.equal(accessToken.accessToken, '481be677a857e7accd8d4c396aea4926152bb20a')
+      assert.equal(accessToken.refreshToken, '66e2f1ffefb8bd8cb40ea1e7fb56af834383bbf3')
+      assert.equal(accessToken.user.userId, '5a36218c24f8a67541b25092')
+    })
+  })
+
   describe('Destroy by Token', () => {
     it('should destroy accessToken by token', async () => {
       const ctx = app.mockContext()

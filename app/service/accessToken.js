@@ -13,6 +13,12 @@ module.exports = app => {
       return data
     }
 
+    // TODO: ADD COV TEST
+    async findByRefreshToken (refreshToken) {
+      let data = await this.ctx.model.AccessToken.findOne({ refreshToken: refreshToken })
+      return data
+    }
+
     async destroyByToken (token) {
       let data = await this.ctx.model.AccessToken.deleteOne({ accessToken: token })
       return data.result
