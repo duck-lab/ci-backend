@@ -110,7 +110,16 @@
       "refreshToken": "refreshToken",
       "refreshTokenExpiresAt": "2317-12-17 08:26:35.647Z",
       "user": {
-        "userId": "#User#username#ole3021"
+        "id": "#User#username#ole3021",
+        "hashedPassword": "hashedPassword",
+        "mobile": "+86 18303033030",
+        "email": "ole3021@gmail.com",
+        "username": "ole3021",
+        "realName": "Oliver.W",
+        "country": "China",
+        "province": "上海",
+        "city": "上海",
+        "address": "静安区"
       },
       "client": {
         "grants": ["password"],
