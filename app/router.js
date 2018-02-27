@@ -10,9 +10,9 @@ module.exports = app => {
 
   // Auth route
   router.post('/login', controller.auth.basicLogin)
-  router.app('/oauth/wechat', controller.auth.customLogin)
-  router.app('/refreshToken', controller.auth.refreshToken)
-  router.app('/logout', controller.auth.revokeToken)
+  router.post('/oauth/wechat', controller.auth.customLogin)
+  router.post('/refreshToken', controller.auth.refreshToken)
+  router.post('/logout', controller.auth.revokeToken)
 
   // User route
   router.get('/users', controller.user.getAllUsers) // 查看和搜索用户

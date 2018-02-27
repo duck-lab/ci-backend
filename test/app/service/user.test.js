@@ -15,6 +15,8 @@ describe('User Service', () => {
       email: 'ole3021@gmail.com',
       username: 'ole3021',
       realName: 'Oliver.W',
+      wechatOpenId: 'testOpenID',
+      wechatUnionId: 'testUnionID',
       country: 'China',
       province: '上海',
       city: '上海',
@@ -100,6 +102,21 @@ describe('User Service', () => {
       const ctx = app.mockContext()
 
       const user = await ctx.service.user.findById(createdUser.id)
+      assert(user)
+      assert.equal(user.mobile, '18303033030')
+      assert.equal(user.email, 'ole3021@gmail.com')
+      assert.equal(user.username, 'ole3021')
+      assert.equal(user.realName, 'Oliver.W')
+      assert.equal(user.country, 'China')
+      assert.equal(user.province, '上海')
+      assert.equal(user.city, '上海')
+      assert.equal(user.address, '静安区')
+    })
+
+    it('should find user by openId', async () => {
+      const ctx = app.mockContext()
+
+      const user = await ctx.service.user.findByOpenId(createdUser.wechatOpenId)
       assert(user)
       assert.equal(user.mobile, '18303033030')
       assert.equal(user.email, 'ole3021@gmail.com')
