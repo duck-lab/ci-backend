@@ -8,7 +8,14 @@ class UserController extends Controller {
   }
 
   async createUser (ctx) {
-    ctx.body = await ctx.service.user.create(ctx.request.body)
+    let info = ctx.request.body
+
+    delete info.confirm
+    // TODO: Add mobile code verify
+    // TODO: Send verify email
+    delete info.captcha
+
+    ctx.body = await ctx.service.user.create(info)
   }
 
   async getAuthUser (ctx) {

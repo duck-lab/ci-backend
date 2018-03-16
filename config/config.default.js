@@ -28,10 +28,15 @@ module.exports = appInfo => {
     grants: ['password']
   }
 
+  config.cors = {
+    credentials: 'Access-Control-Allow-Credentials'
+  }
+
   config.security = {
     csrf: {
       enable: false
-    }
+    },
+    domainWhiteList: [ 'http://localhost:8000' ]
   }
 
   config.accessToken = {
