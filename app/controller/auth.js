@@ -38,7 +38,9 @@ class AuthController extends Controller {
     })
 
     this.ctx.body = {
-      accesstoken: token.accessToken,
+      // TODO: *** fix with the correct role ***
+      currentAuthority: 'admin',
+      accessToken: token.accessToken,
       accessTokenExpiresAt: token.accessTokenExpiresAt,
       refreshToken: token.refreshToken,
       refreshTokenExpiresAt: token.refreshTokenExpiresAt
@@ -67,7 +69,7 @@ class AuthController extends Controller {
     })
 
     this.ctx.body = {
-      accesstoken: token.accessToken,
+      accessToken: token.accessToken,
       accessTokenExpiresAt: token.accessTokenExpiresAt,
       refreshToken: token.refreshToken,
       refreshTokenExpiresAt: token.refreshTokenExpiresAt
@@ -96,7 +98,7 @@ class AuthController extends Controller {
     })
 
     this.ctx.body = {
-      accesstoken: token.accessToken,
+      accessToken: token.accessToken,
       accessTokenExpiresAt: token.accessTokenExpiresAt,
       refreshToken: token.refreshToken,
       refreshTokenExpiresAt: token.refreshTokenExpiresAt

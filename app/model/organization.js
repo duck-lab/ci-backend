@@ -5,11 +5,12 @@ const timestamps = require('mongoose-timestamp')
 module.exports = ({ mongoose }) => {
   const OrganizationSchema = new mongoose.Schema({
     name: { type: String, required: true, trim: true },
-    logo: { type: String },
+    logo: { type: String, required: true, trim: true },
     contact: { type: String },
     email: { type: String },
     address: { type: String },
     site: { type: String },
+    sharedType: { type: String },
     __v: { type: Number, select: false }
   })
 

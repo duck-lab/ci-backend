@@ -4,6 +4,8 @@ module.exports = () => {
   return async function (ctx, next) {
     let { authorization: accessToken } = ctx.headers
 
+    if (!accessToken) ctx.throw(401, 'Authentication Required!')
+
     accessToken = accessToken.replace('Bearer ', '')
 
     if (!accessToken) throw new Error('Rquired authed user access only!')

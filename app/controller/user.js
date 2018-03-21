@@ -15,7 +15,14 @@ class UserController extends Controller {
     // TODO: Send verify email
     delete info.captcha
 
-    ctx.body = await ctx.service.user.create(info)
+    const userInfo = await ctx.service.user.create(info)
+
+    delete userInfo.hashedPassword
+
+    // TODO: consider status value
+    ctx.body = Object.assign({}, {
+      status: 'ok'
+    }, userInfo)
   }
 
   async getAuthUser (ctx) {
