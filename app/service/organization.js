@@ -23,9 +23,9 @@ module.exports = app => {
     }
 
     async createWithUserId (info, uid) {
-      if (!info || !uid) { return }
+      if (!info || !uid) { return null }
       const user = await this.ctx.model.User.findById(uid)
-      if (!user) return
+      if (!user) return null
       let organization = await this.ctx.model.Organization.create(info)
 
       await this.ctx.service.management.create({
